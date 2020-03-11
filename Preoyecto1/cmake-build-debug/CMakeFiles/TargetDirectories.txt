@@ -1,0 +1,3 @@
+C:/Users/yasmi/OneDrive/Documents/GitHub/EDD_1S2020_PY1_201801385/Preoyecto1/cmake-build-debug/CMakeFiles/Preoyecto1.dir
+C:/Users/yasmi/OneDrive/Documents/GitHub/EDD_1S2020_PY1_201801385/Preoyecto1/cmake-build-debug/CMakeFiles/edit_cache.dir
+C:/Users/yasmi/OneDrive/Documents/GitHub/EDD_1S2020_PY1_201801385/Preoyecto1/cmake-build-debug/CMakeFiles/rebuild_cache.dir

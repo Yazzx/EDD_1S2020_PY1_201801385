@@ -1,0 +1,4 @@
+"C:\Users\yasmi\AppData\Local\JetBrains\CLion 2019.3.3\bin\cmake\win\bin\cmake.exe" -DCMAKE_BUILD_TYPE=Debug -G "CodeBlocks - MinGW Makefiles" C:\Users\yasmi\OneDrive\Documents\GitHub\EDD_1S2020_PY1_201801385\Preoyecto1
+-- Configuring done
+-- Generating done
+-- Build files have been written to: C:/Users/yasmi/OneDrive/Documents/GitHub/EDD_1S2020_PY1_201801385/Preoyecto1/cmake-build-debug
