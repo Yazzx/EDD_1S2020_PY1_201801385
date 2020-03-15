@@ -1,0 +1,38 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+C:/Users/yasmi/OneDrive/Documents/GitHub/EDD_1S2020_PY1_201801385/Preoyecto1/ListaDobleCircular.h
+iostream
+-
+conio.h
+-
+cstdlib
+-
+stdio.h
+-
+windows.h
+-
+fstream
+-
+
+C:/Users/yasmi/OneDrive/Documents/GitHub/EDD_1S2020_PY1_201801385/Preoyecto1/main.cpp
+iostream
+-
+conio.h
+-
+cstdlib
+-
+stdio.h
+-
+windows.h
+-
+fstream
+-
+ListaDobleCircular.h
+C:/Users/yasmi/OneDrive/Documents/GitHub/EDD_1S2020_PY1_201801385/Preoyecto1/ListaDobleCircular.h
+

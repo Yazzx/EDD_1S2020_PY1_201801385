@@ -53,10 +53,33 @@
       <option name="presentableId" value="Default" />
       <updated>1583898882767</updated>
       <workItem from="1583898886987" duration="2917000" />
+      <workItem from="1584240408674" duration="7204000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="1" />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="444" y="12" key="#com.intellij.ide.util.MemberChooser" timestamp="1584251156759">
+      <screen x="0" y="0" width="1366" height="728" />
+    </state>
+    <state x="444" y="12" key="#com.intellij.ide.util.MemberChooser/0.0.1366.728@0.0.1366.728" timestamp="1584251156759" />
+    <state width="1311" height="7" key="GridCell.Tab.0.bottom" timestamp="1584254115785">
+      <screen x="0" y="0" width="1366" height="728" />
+    </state>
+    <state width="1311" height="7" key="GridCell.Tab.0.bottom/0.0.1366.728@0.0.1366.728" timestamp="1584254115785" />
+    <state width="1311" height="7" key="GridCell.Tab.0.center" timestamp="1584254115784">
+      <screen x="0" y="0" width="1366" height="728" />
+    </state>
+    <state width="1311" height="7" key="GridCell.Tab.0.center/0.0.1366.728@0.0.1366.728" timestamp="1584254115784" />
+    <state width="1311" height="7" key="GridCell.Tab.0.left" timestamp="1584254115784">
+      <screen x="0" y="0" width="1366" height="728" />
+    </state>
+    <state width="1311" height="7" key="GridCell.Tab.0.left/0.0.1366.728@0.0.1366.728" timestamp="1584254115784" />
+    <state width="1311" height="7" key="GridCell.Tab.0.right" timestamp="1584254115785">
+      <screen x="0" y="0" width="1366" height="728" />
+    </state>
+    <state width="1311" height="7" key="GridCell.Tab.0.right/0.0.1366.728@0.0.1366.728" timestamp="1584254115785" />
   </component>
 </project>

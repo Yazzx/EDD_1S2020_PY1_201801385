@@ -16,7 +16,7 @@ using namespace::std;
 
 // Acá van las palabras que ingresan del JSON
 
-class CircularDoble
+class ListaDobleCircular
 {
 public:
     bool esVacia = true, palabradada= false;
@@ -34,16 +34,16 @@ public:
 
     void insertar(string palabra);
     void mostrarLista();
-    bool buscarEnLista(string palabra);
+    bool buscar(string palabra);
     string generarGraphviz();
 
 };
 
-bool CircularDoble::isVacia() const {
+bool ListaDobleCircular::isVacia() const {
     return esVacia;
 }
 
-void CircularDoble::insertar(string palabra) {
+void ListaDobleCircular::insertar(string palabra) {
 
     if (!ultimo)
     {
@@ -80,7 +80,7 @@ void CircularDoble::insertar(string palabra) {
 
 }
 
-void CircularDoble::mostrarLista() {
+void ListaDobleCircular::mostrarLista() {
 
     cout<<endl;
     cout<<endl;
@@ -105,7 +105,7 @@ void CircularDoble::mostrarLista() {
     cout << "La lista ha finalizado" << endl;
 }
 
-bool CircularDoble::buscarEnLista(string palabra) {
+bool ListaDobleCircular::buscar(string palabra) {
     bool encontrado = false;
 
     if (!ultimo)
@@ -140,7 +140,7 @@ bool CircularDoble::buscarEnLista(string palabra) {
     return false;
 }
 
-string CircularDoble::generarGraphviz() {
+string ListaDobleCircular::generarGraphviz() {
     string gg;
 
     actual = ultimo->siguiente;
@@ -155,29 +155,17 @@ string CircularDoble::generarGraphviz() {
 
     actual = ultimo->siguiente;
 
-    int ultimo_correl;
     do{
         string correl = to_string(actual->correlativo);
         string correl_s = to_string(actual->siguiente->correlativo);
 
-        gg = gg + correl + " -> "+ correl_s + ";";
-
-        ultimo_correl = actual->siguiente->correlativo;
+        gg = gg + correl + " -> "+ correl_s + ";\n";
+        gg = gg + correl_s + " -> "+ correl + ";\n";
 
         actual = actual->siguiente;
     }while(actual != ultimo->siguiente);
 
-    for(int i = --ultimo_correl; i>= 0 ;--i){
-        string numero = to_string(i);
 
-        if( i == 0){
-
-            gg = gg + "0;";
-        }else{
-            gg = gg + numero + "->";
-        }
-
-    }
 
     return gg;
 }
