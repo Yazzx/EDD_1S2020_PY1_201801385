@@ -80,13 +80,22 @@
 				</MakeCommands>
 			</Target>
 		</Build>
+		<Unit filename="C:/Users/yasmi/OneDrive/Documents/GitHub/EDD_1S2020_PY1_201801385/Preoyecto1/ArbolBinario.h">
+			<Option target="Preoyecto1"/>
+		</Unit>
 		<Unit filename="C:/Users/yasmi/OneDrive/Documents/GitHub/EDD_1S2020_PY1_201801385/Preoyecto1/Cola.h">
 			<Option target="Preoyecto1"/>
 		</Unit>
 		<Unit filename="C:/Users/yasmi/OneDrive/Documents/GitHub/EDD_1S2020_PY1_201801385/Preoyecto1/ListaDobleCircular.h">
 			<Option target="Preoyecto1"/>
 		</Unit>
+		<Unit filename="C:/Users/yasmi/OneDrive/Documents/GitHub/EDD_1S2020_PY1_201801385/Preoyecto1/ListaSimpleOrdenada.h">
+			<Option target="Preoyecto1"/>
+		</Unit>
 		<Unit filename="C:/Users/yasmi/OneDrive/Documents/GitHub/EDD_1S2020_PY1_201801385/Preoyecto1/ObjFicha.h">
+			<Option target="Preoyecto1"/>
+		</Unit>
+		<Unit filename="C:/Users/yasmi/OneDrive/Documents/GitHub/EDD_1S2020_PY1_201801385/Preoyecto1/ObjJugador.h">
 			<Option target="Preoyecto1"/>
 		</Unit>
 		<Unit filename="C:/Users/yasmi/OneDrive/Documents/GitHub/EDD_1S2020_PY1_201801385/Preoyecto1/main.cpp">

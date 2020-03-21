@@ -6,6 +6,22 @@
 
 #IncludeRegexTransform: 
 
+C:/Users/yasmi/OneDrive/Documents/GitHub/EDD_1S2020_PY1_201801385/Preoyecto1/Cola.h
+stdio.h
+-
+stdlib.h
+-
+string.h
+-
+time.h
+-
+conio.h
+-
+iostream
+-
+ObjFicha.h
+C:/Users/yasmi/OneDrive/Documents/GitHub/EDD_1S2020_PY1_201801385/Preoyecto1/ObjFicha.h
+
 C:/Users/yasmi/OneDrive/Documents/GitHub/EDD_1S2020_PY1_201801385/Preoyecto1/ListaDobleCircular.h
 iostream
 -
@@ -19,6 +35,8 @@ windows.h
 -
 fstream
 -
+
+C:/Users/yasmi/OneDrive/Documents/GitHub/EDD_1S2020_PY1_201801385/Preoyecto1/ObjFicha.h
 
 C:/Users/yasmi/OneDrive/Documents/GitHub/EDD_1S2020_PY1_201801385/Preoyecto1/main.cpp
 iostream
@@ -35,4 +53,6 @@ fstream
 -
 ListaDobleCircular.h
 C:/Users/yasmi/OneDrive/Documents/GitHub/EDD_1S2020_PY1_201801385/Preoyecto1/ListaDobleCircular.h
+Cola.h
+C:/Users/yasmi/OneDrive/Documents/GitHub/EDD_1S2020_PY1_201801385/Preoyecto1/Cola.h
 

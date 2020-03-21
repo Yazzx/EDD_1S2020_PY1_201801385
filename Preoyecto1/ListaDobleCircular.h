@@ -153,6 +153,19 @@ string ListaDobleCircular::generarGraphviz() {
         actual = actual->siguiente;
     }while(actual != ultimo->siguiente);
 
+    gg = gg + "{ rank=same ";
+    do{
+        string correl = to_string(actual->correlativo);
+
+        gg = gg + correl + " " ;
+
+        if(actual == ultimo){
+            gg = gg + " }";
+        }
+
+        actual = actual->siguiente;
+    }while(actual != ultimo->siguiente);
+
     actual = ultimo->siguiente;
 
     do{

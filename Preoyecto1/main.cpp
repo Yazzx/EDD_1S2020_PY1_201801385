@@ -6,6 +6,7 @@
 #include <fstream>
 
 #include "ListaDobleCircular.h"
+#include "Cola.h"
 
 using namespace::std;
 
@@ -13,9 +14,10 @@ using namespace::std;
 void generarGraphPrueba();
 
 ListaDobleCircular CircularDoble;
+Cola ColadeFichas;
 
 int main() {
-    std::cout << "Pruebas de estructuras" << std::endl;
+    /*std::cout << "Pruebas de estructuras" << std::endl;
 
     // circularDoble: string
     string insertando, buscando;
@@ -47,6 +49,8 @@ int main() {
     getch(); */
 
     cout << "GENERANDO GRAPHVIZ" << endl;
+    getch();
+    ColadeFichas.llenarCola();
     generarGraphPrueba();
 
 
@@ -63,7 +67,7 @@ void generarGraphPrueba(){
     }
     // TODO
     // NOMBREDEESTRUCTURA.generarGraphviz()
-    string kionda = CircularDoble.generarGraphviz();
+    string kionda = ColadeFichas.generarGraphviz();
 
     prueba<<"digraph G {\n"
               "\n"

@@ -10,6 +10,8 @@ private:
     char letra;
     int puntaje;
 public:
+    ObjFicha(char letra, int puntaje);
+    ObjFicha();
     char getLetra() const;
     void setLetra(char letra);
 
@@ -31,6 +33,15 @@ int ObjFicha::getPuntaje() const {
 
 void ObjFicha::setPuntaje(int puntaje) {
     ObjFicha::puntaje = puntaje;
+}
+
+ObjFicha::ObjFicha(char letra, int puntaje) {
+    this->letra = letra;
+    this->puntaje = puntaje;
+}
+
+ObjFicha::ObjFicha() {
+
 }
 
 #endif //PREOYECTO1_OBJFICHA_H

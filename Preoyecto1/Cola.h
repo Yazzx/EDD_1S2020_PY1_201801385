@@ -8,6 +8,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <time.h>
 #include <conio.h>
 #include <iostream>
 
@@ -38,6 +39,9 @@ public:
     void llenarCola();
 
     string generarGraphviz();
+
+    void shufflear();
+    void swap (ObjFicha *a, ObjFicha *b);
 };
 
 bool Cola::isVacia() const {
@@ -129,7 +133,117 @@ void Cola::llenarCola() {
 
     // esto llena y shufflea la cola
 
+    ObjFicha ficha_a('a', 1);
+    ObjFicha ficha_e('e', 1);
+    for (int i = 0; i < 12; ++i) {
+        this->insertar(ficha_a);
+        this->insertar(ficha_e);
+    }
+
+    ObjFicha ficha_o('o', 1);
+    for (int i = 0; i < 9; ++i) {
+        this->insertar(ficha_o);
+    }
+
+    ObjFicha ficha_i('i', 1);
+    ObjFicha ficha_s('s', 1);
+    for (int i = 0; i < 6; ++i) {
+        this->insertar(ficha_i);
+        this->insertar(ficha_s);
+    }
+
+    ObjFicha ficha_n('n', 1);
+    ObjFicha ficha_r('r', 1);
+    ObjFicha ficha_u('u', 1);
+    ObjFicha ficha_d('d', 2);
+    for (int i = 0; i < 5; ++i) {
+        this->insertar(ficha_n);
+        this->insertar(ficha_r);
+        this->insertar(ficha_u);
+        this->insertar(ficha_d);
+    }
+
+    ObjFicha ficha_l('l', 1);
+    ObjFicha ficha_t('t', 1);
+    ObjFicha ficha_c('c', 3);
+    for (int i = 0; i < 4; ++i) {
+        this->insertar(ficha_l);
+        this->insertar(ficha_t);
+        this->insertar(ficha_c);
+    }
+
+    ObjFicha ficha_g('g', 2);
+    ObjFicha ficha_b('b', 3);
+    ObjFicha ficha_m('m', 3);
+    ObjFicha ficha_p('p', 3);
+    ObjFicha ficha_h('h', 4);
+    for (int i = 0; i < 2; ++i) {
+        this->insertar(ficha_g);
+        this->insertar(ficha_b);
+        this->insertar(ficha_m);
+        this->insertar(ficha_p);
+        this->insertar(ficha_h);
+    }
+
+    ObjFicha ficha_f('f', 4);
+    ObjFicha ficha_v('v', 4);
+    ObjFicha ficha_y('y', 4);
+    ObjFicha ficha_q('q', 5);
+    ObjFicha ficha_j('j', 8);
+    ObjFicha ficha_enie(164, 8);
+    ObjFicha ficha_x('x', 8);
+    ObjFicha ficha_z('z', 10);
+
+    this->insertar(ficha_f);
+    this->insertar(ficha_v);
+    this->insertar(ficha_y);
+    this->insertar(ficha_q);
+    this->insertar(ficha_j);
+    this->insertar(ficha_enie);
+    this->insertar(ficha_x);
+    this->insertar(ficha_z);
+
 }
+
+string Cola::generarGraphviz() {
+    string lista;
+
+    actual = primero;
+    int contador = 0;
+
+    while(actual != ultimo->siguiente){
+
+        string u;
+        string numero = to_string(contador);
+
+        if(actual == ultimo){
+            lista = lista + numero + ";\n";}
+        else {
+                lista = lista + numero + "->";
+            }
+
+        contador++;
+        actual = actual->siguiente;
+    }
+
+    actual = primero;
+    contador = 0;
+    while(actual != ultimo->siguiente){
+        string u;
+        string numero = to_string(contador);
+        string puntaje = to_string(actual->ficha.getPuntaje());
+
+        lista = lista + numero + " [label = \"" + actual->ficha.getLetra() + " x " + puntaje + " pts\"];\n";
+        contador++;
+        actual = actual->siguiente;
+    }
+
+    return lista;
+}
+
+
+
+
 
 
 #endif //PREOYECTO1_COLA_H
