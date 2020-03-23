@@ -7,6 +7,9 @@
 
 #include "ListaDobleCircular.h"
 #include "Cola.h"
+#include "ListaOrdenadaPuntajes.h"
+#include "ListaOrdenadaJugadores.h"
+#include "ArbolBinario.h"
 
 using namespace::std;
 
@@ -15,32 +18,44 @@ void generarGraphPrueba();
 
 ListaDobleCircular CircularDoble;
 Cola ColadeFichas;
+ListaOrdenadaJugadores ListaMejoresJugadores;
+ArbolBinario ArbolNombres;
 
 int main() {
-    /*std::cout << "Pruebas de estructuras" << std::endl;
+    std::cout << "Pruebas de estructuras" << std::endl;
 
-    // circularDoble: string
-    string insertando, buscando;
+    // circularDoble, Arboldenombres string
+    // ordenadapuntajes: int
+
+    int insertando, buscando;
+
 
     cout << "INSERTANDO" << endl;
-    getch();
-    for (size_t i = 0; i < 4; i++)
+    //getch();
+
+
+    for (size_t i = 0; i < 8; i++)
     {
-        cout << "inserte una palabra" << endl;
+        string insertando;
+        cout << "inserte algo" << endl;
         cin >> insertando;
-        CircularDoble.insertar(insertando);
+
+        ArbolNombres.iniciarInsertar(insertando);
     }
-    CircularDoble.mostrarLista();
+    //getch();
+    cout<<"Mostranding\n\n";
+    ArbolNombres.iniciarmostrar();
+    cout<<"\n\n\n\n";
     getch();
 
-    cout << "BUSCANDO" << endl;
+    /*cout << "BUSCANDO" << endl;
     getch();
     for (size_t i = 0; i < 4; i++)
     {
         cout << "Busque un caracter" << endl;
         cin >> buscando;
-        CircularDoble.buscar(buscando);
-    }
+        ListaPuntajesdeJugador.buscar(buscando);
+    }*/
 
     /* cout << "ELIMINANDO" << endl;
     getch();
@@ -50,8 +65,9 @@ int main() {
 
     cout << "GENERANDO GRAPHVIZ" << endl;
     getch();
-    ColadeFichas.llenarCola();
-    generarGraphPrueba();
+
+    //ColadeFichas.llenarCola();
+   generarGraphPrueba();
 
 
     return 0;
@@ -67,8 +83,9 @@ void generarGraphPrueba(){
     }
     // TODO
     // NOMBREDEESTRUCTURA.generarGraphviz()
-    string kionda = ColadeFichas.generarGraphviz();
+    string kionda = ArbolNombres.iniciargenerarGraphviz();
 
+    cout<<"\n\n\n"<<kionda<<"\n\n";
     prueba<<"digraph G {\n"
               "\n"
               " node [shape=box];\n"

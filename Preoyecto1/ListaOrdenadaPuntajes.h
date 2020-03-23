@@ -1,6 +1,7 @@
 //
 // Created by yasmi on 21/03/2020.
 //
+
 #include <iostream>
 #include <conio.h>
 #include <cstdlib>
@@ -8,12 +9,15 @@
 #include <windows.h>
 #include <fstream>
 
-#ifndef PREOYECTO1_LISTASIMPLEORDENADA_H
-#define PREOYECTO1_LISTASIMPLEORDENADA_H
+#ifndef PREOYECTO1_LISTAORDENADAPUNTAJES_H
+#define PREOYECTO1_LISTAORDENADAPUNTAJES_H
+
+
 using namespace::std;
 
-class ListaSimpleOrdenada{
+class ListaOrdenadaPuntajes{
 
+public:
     bool esVacia = true;
     int contanodos = 0;
     class Nodo
@@ -30,42 +34,44 @@ class ListaSimpleOrdenada{
     void mostrarLista();
     string generarGraphviz();
     void ordenar();
+    int getPrimero();
 };
 
-bool ListaSimpleOrdenada::isVacia() const {
+bool ListaOrdenadaPuntajes::isVacia() const {
     return this->esVacia;
 }
 
-void ListaSimpleOrdenada::insertar(int puntaje) {
-    if (!primero)
-    {
+void ListaOrdenadaPuntajes::insertar(int puntaje) {
+    if(!primero){
         esVacia = false;
         primero = new (Nodo);
         ultimo = new (Nodo);
+        nuevo = new (Nodo);
 
-        primero->siguiente = NULL;
-        primero->puntaje = puntaje;
-        primero->correlativo = contanodos;
+        nuevo->puntaje = puntaje;
         contanodos++;
+        nuevo->correlativo = contanodos;
 
-        // si son los mismos porque primero y ultimo son
-        // punteros, NO NODOS alv
-        ultimo = primero;
+        primero = nuevo;
+        ultimo = nuevo;
         return;
     }
+    else {
+        nuevo = new (Nodo);
+        nuevo->puntaje = puntaje;
+        contanodos++;
+        nuevo->correlativo = contanodos;
 
-    nuevo = new (Nodo);
+        nuevo->siguiente = primero;
+        primero = nuevo;
 
-    nuevo->puntaje = puntaje;
-    nuevo->correlativo = contanodos;
-    contanodos++;
+        this->ordenar();
+    }
 
-    ultimo->siguiente = nuevo;
-    ultimo = nuevo;
     return;
 }
 
-void ListaSimpleOrdenada::mostrarLista() {
+void ListaOrdenadaPuntajes::mostrarLista() {
     cout<<endl;
     cout<<endl;
     if (esVacia)
@@ -78,7 +84,7 @@ void ListaSimpleOrdenada::mostrarLista() {
 
     do
     {
-        cout << "\t\t"<<actual->correlativo << " " << actual->puntaje << endl;
+        cout << actual->puntaje << endl;
 
         actual = actual->siguiente;
 
@@ -89,7 +95,7 @@ void ListaSimpleOrdenada::mostrarLista() {
     cout << "La lista ha finalizado" << endl;
 }
 
-string ListaSimpleOrdenada::generarGraphviz() {
+string ListaOrdenadaPuntajes::generarGraphviz() {
     string lista;
 
     actual = primero;
@@ -125,31 +131,38 @@ string ListaSimpleOrdenada::generarGraphviz() {
     return lista;
 }
 
-void ListaSimpleOrdenada::ordenar() {
-    actual = primero;
+void ListaOrdenadaPuntajes::ordenar() {
 
-    while(actual != NULL){
+        actual = primero;
 
-        auxiliar = actual->siguiente;
+        while(actual != nullptr){
 
-        while(auxiliar != NULL){
+            auxiliar = actual->siguiente;
 
-            if(actual->puntaje < auxiliar->puntaje){
+            while(auxiliar != nullptr){
 
-                int aux = auxiliar->puntaje;
-                auxiliar->puntaje = actual->puntaje;
+                if(auxiliar->puntaje > actual->puntaje){
 
-                actual->puntaje = aux;
+                    int aux = auxiliar->puntaje;
 
+                    auxiliar->puntaje = actual->puntaje;
+
+                    actual->puntaje = aux;
+                }
+
+                auxiliar = auxiliar->siguiente;
             }
 
-            auxiliar = auxiliar->siguiente;
+            actual = actual->siguiente;
         }
+}
 
-        actual = actual->siguiente;
+int ListaOrdenadaPuntajes::getPrimero() {
+    if(!primero){
+        return 0;
     }
-
+    return this->primero->puntaje;
 }
 
 
-#endif //PREOYECTO1_LISTASIMPLEORDENADA_H
+#endif //PREOYECTO1_LISTAORDENADAPUNTAJES_H

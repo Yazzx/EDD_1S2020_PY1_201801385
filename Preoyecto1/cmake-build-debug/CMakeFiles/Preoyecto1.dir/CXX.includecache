@@ -6,6 +6,22 @@
 
 #IncludeRegexTransform: 
 
+C:/Users/yasmi/OneDrive/Documents/GitHub/EDD_1S2020_PY1_201801385/Preoyecto1/ArbolBinario.h
+iostream
+-
+conio.h
+-
+cstdlib
+-
+stdio.h
+-
+windows.h
+-
+fstream
+-
+ObjJugador.h
+C:/Users/yasmi/OneDrive/Documents/GitHub/EDD_1S2020_PY1_201801385/Preoyecto1/ObjJugador.h
+
 C:/Users/yasmi/OneDrive/Documents/GitHub/EDD_1S2020_PY1_201801385/Preoyecto1/Cola.h
 stdio.h
 -
@@ -36,7 +52,53 @@ windows.h
 fstream
 -
 
+C:/Users/yasmi/OneDrive/Documents/GitHub/EDD_1S2020_PY1_201801385/Preoyecto1/ListaOrdenadaJugadores.h
+iostream
+-
+conio.h
+-
+cstdlib
+-
+stdio.h
+-
+windows.h
+-
+fstream
+-
+ObjJugador.h
+C:/Users/yasmi/OneDrive/Documents/GitHub/EDD_1S2020_PY1_201801385/Preoyecto1/ObjJugador.h
+
+C:/Users/yasmi/OneDrive/Documents/GitHub/EDD_1S2020_PY1_201801385/Preoyecto1/ListaOrdenadaPuntajes.h
+iostream
+-
+conio.h
+-
+cstdlib
+-
+stdio.h
+-
+windows.h
+-
+fstream
+-
+
 C:/Users/yasmi/OneDrive/Documents/GitHub/EDD_1S2020_PY1_201801385/Preoyecto1/ObjFicha.h
+
+C:/Users/yasmi/OneDrive/Documents/GitHub/EDD_1S2020_PY1_201801385/Preoyecto1/ObjJugador.h
+iostream
+-
+conio.h
+-
+cstdlib
+-
+stdio.h
+-
+windows.h
+-
+fstream
+-
+ListaOrdenadaPuntajes.h
+C:/Users/yasmi/OneDrive/Documents/GitHub/EDD_1S2020_PY1_201801385/Preoyecto1/ListaOrdenadaPuntajes.h
 
 C:/Users/yasmi/OneDrive/Documents/GitHub/EDD_1S2020_PY1_201801385/Preoyecto1/main.cpp
 iostream
@@ -55,4 +117,10 @@ ListaDobleCircular.h
 C:/Users/yasmi/OneDrive/Documents/GitHub/EDD_1S2020_PY1_201801385/Preoyecto1/ListaDobleCircular.h
 Cola.h
 C:/Users/yasmi/OneDrive/Documents/GitHub/EDD_1S2020_PY1_201801385/Preoyecto1/Cola.h
+ListaOrdenadaPuntajes.h
+C:/Users/yasmi/OneDrive/Documents/GitHub/EDD_1S2020_PY1_201801385/Preoyecto1/ListaOrdenadaPuntajes.h
+ListaOrdenadaJugadores.h
+C:/Users/yasmi/OneDrive/Documents/GitHub/EDD_1S2020_PY1_201801385/Preoyecto1/ListaOrdenadaJugadores.h
+ArbolBinario.h
+C:/Users/yasmi/OneDrive/Documents/GitHub/EDD_1S2020_PY1_201801385/Preoyecto1/ArbolBinario.h
 
