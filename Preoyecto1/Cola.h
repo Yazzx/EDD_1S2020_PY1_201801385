@@ -36,6 +36,7 @@ public:
     void insertar(ObjFicha ficha);
     void mostrarLista();
     bool buscar(char letra);
+    ObjFicha pop();
 
     void llenarCola();
 
@@ -273,10 +274,15 @@ string Cola::generarGraphviz() {
     return lista;
 }
 
+ObjFicha Cola::pop() {
 
+    auxiliar = new (Nodo);
+    auxiliar = this->primero;
 
+    primero = primero->siguiente;
 
-
+    return auxiliar->ficha;
+}
 
 
 #endif //PREOYECTO1_COLA_H

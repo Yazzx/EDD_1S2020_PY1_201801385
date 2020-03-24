@@ -10,6 +10,7 @@
 #include "ListaOrdenadaPuntajes.h"
 #include "ListaOrdenadaJugadores.h"
 #include "ArbolBinario.h"
+#include "ListaDobleFichas.h"
 
 using namespace::std;
 
@@ -21,70 +22,32 @@ Cola ColadeFichas;
 ListaOrdenadaJugadores ListaMejoresJugadores;
 ListaOrdenadaPuntajes ListaPuntajes;
 ArbolBinario ArbolNombres;
+ListaDobleFichas ListaFichasJugador;
 
 int main() {
     std::cout << "Pruebas de estructuras" << std::endl;
+    ColadeFichas.llenarCola();
+
+
 int insertando, buscando;
 
     cout << "INSERTANDO" << endl;
     //getch();
 
-    ObjJugador uno;
-    uno.setNombre("Carmen");
+    for (int i = 0; i < 7; ++i) {
 
-
-    for (size_t i = 0; i < 6; i++)
-    {
-        insertando;
-        cout << "inserte algo a " << uno.getNombre()<< endl;
-        cin >> insertando;
-
-        uno.ListaPuntajesdeJugador.insertar(insertando);
+        ObjFicha ficha = ColadeFichas.pop();
+        ListaFichasJugador.insertar(ficha);
     }
-    uno.ListaPuntajesdeJugador.mostrarLista();
-    ListaMejoresJugadores.insertar(uno);
-
-
-    cout<<"\n\n";
-    ObjJugador dos;
-    dos.setNombre("Ithali");
-    for (size_t i = 0; i < 6; i++)
-    {
-        insertando;
-        cout << "inserte algo a " << dos.getNombre()<< endl;
-        cin >> insertando;
-
-        dos.ListaPuntajesdeJugador.insertar(insertando);
-    }
-    dos.ListaPuntajesdeJugador.mostrarLista();
-    ListaMejoresJugadores.insertar(dos);
-
-    cout<<"\n\n";
-    ObjJugador tres;
-    tres.setNombre("Maria");
-    for (size_t i = 0; i < 6; i++)
-    {
-        insertando;
-        cout << "inserte algo a " << tres.getNombre()<< endl;
-        cin >> insertando;
-
-        tres.ListaPuntajesdeJugador.insertar(insertando);
-    }
-    tres.ListaPuntajesdeJugador.mostrarLista();
-    ListaMejoresJugadores.insertar(tres);
-
 
     cout<<"\nMOSTRANDO\n\n";
 
-    ListaMejoresJugadores.mostrarLista();
-
-
-
+    ListaFichasJugador.mostrarLista();
 
     cout << "GENERANDO GRAPHVIZ" << endl;
     getch();
 
-   ColadeFichas.llenarCola();
+
    generarGraphPrueba();
 
 
@@ -101,7 +64,7 @@ void generarGraphPrueba(){
     }
     // TODO
     // NOMBREDEESTRUCTURA.generarGraphviz()
-    string kionda = ListaMejoresJugadores.generarGraphviz();
+    string kionda = ListaFichasJugador.generarGraphviz();
 
     //cout<<"\n\n\n"<<kionda<<"\n\n";
     prueba<<"digraph G {\n"

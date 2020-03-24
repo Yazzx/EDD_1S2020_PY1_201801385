@@ -54,6 +54,24 @@ windows.h
 fstream
 -
 
+C:/Users/yasmi/OneDrive/Documents/GitHub/EDD_1S2020_PY1_201801385/Preoyecto1/ListaDobleFichas.h
+stdio.h
+-
+stdlib.h
+-
+string.h
+-
+time.h
+-
+conio.h
+-
+iostream
+-
+bits/stdc++.h
+-
+ObjFicha.h
+C:/Users/yasmi/OneDrive/Documents/GitHub/EDD_1S2020_PY1_201801385/Preoyecto1/ObjFicha.h
+
 C:/Users/yasmi/OneDrive/Documents/GitHub/EDD_1S2020_PY1_201801385/Preoyecto1/ListaOrdenadaJugadores.h
 iostream
 -
@@ -125,4 +143,6 @@ ListaOrdenadaJugadores.h
 C:/Users/yasmi/OneDrive/Documents/GitHub/EDD_1S2020_PY1_201801385/Preoyecto1/ListaOrdenadaJugadores.h
 ArbolBinario.h
 C:/Users/yasmi/OneDrive/Documents/GitHub/EDD_1S2020_PY1_201801385/Preoyecto1/ArbolBinario.h
+ListaDobleFichas.h
+C:/Users/yasmi/OneDrive/Documents/GitHub/EDD_1S2020_PY1_201801385/Preoyecto1/ListaDobleFichas.h
 
