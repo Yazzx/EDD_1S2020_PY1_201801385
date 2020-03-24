@@ -57,11 +57,10 @@ void ListaOrdenadaJugadores::insertar(ObjJugador jugador) {
         return;
     }
     // si si lo encuentra
-   /* else if(buscar(jugador) == true){
+   else if(buscar(jugador) == true){
         editar(jugador);
-        this->ordenar();
         return;
-    }*/
+    }
     else {
         nuevo = new (Nodo);
         nuevo->jugador = jugador;
@@ -71,9 +70,6 @@ void ListaOrdenadaJugadores::insertar(ObjJugador jugador) {
         nuevo->siguiente = primero;
         primero = nuevo;
     }
-
-
-    //this->ordenar();
     return;
 }
 
@@ -86,12 +82,13 @@ void ListaOrdenadaJugadores::mostrarLista() {
         return;
 
     }
+
+    this->ordenar();
+
     actual = primero;
-
-
     do
     {
-        cout << "\t\t"<<actual->correlativo << " " << actual->jugador.getNombre()<< " "<<actual->jugador.getPuntajeAlto() << endl;
+        cout << "\t\t" << actual->jugador.getNombre()<< " "<<actual->jugador.getPuntajeAlto() << endl;
 
         actual = actual->siguiente;
 
@@ -139,7 +136,7 @@ string ListaOrdenadaJugadores::generarGraphviz() {
 }
 
 void ListaOrdenadaJugadores::ordenar() {
-/*
+
     actual = primero;
 
     while(actual != ultimo->siguiente){
@@ -162,7 +159,7 @@ void ListaOrdenadaJugadores::ordenar() {
 
         actual = actual->siguiente;
     }
-*/
+
 }
 
 void ListaOrdenadaJugadores::editar(ObjJugador jugador) {
@@ -190,12 +187,16 @@ bool ListaOrdenadaJugadores::buscar(ObjJugador jugador) {
     auxiliar = NULL;
     while(actual != NULL){
 
-        if((actual->jugador.getNombre()).compare(jugador.getNombre()) == 0){
-            return true;
-        }
+        if(actual != ultimo->siguiente){
+            if(actual->jugador.getNombre() == jugador.getNombre()){
+                return true;
+            }
 
-        auxiliar = actual;
-        actual = actual->siguiente;
+            auxiliar = actual;
+            actual = actual->siguiente;
+        } else {
+            return false;
+        }
     }
 
     return false;

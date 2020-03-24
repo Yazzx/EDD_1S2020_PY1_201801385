@@ -3,4 +3,4 @@ project(Preoyecto1)
 
 set(CMAKE_CXX_STANDARD 14)
 
-add_executable(Preoyecto1 main.cpp ListaDobleCircular.h Cola.h ObjFicha.h ArbolBinario.h ObjJugador.h ListaOrdenadaPuntajes.h ListaOrdenadaJugadores.h)
+add_executable(Preoyecto1 main.cpp ListaDobleCircular.h Cola.h ObjFicha.h ArbolBinario.h ObjJugador.h ListaOrdenadaPuntajes.h ListaOrdenadaJugadores.h ListaDobleFichas.h)

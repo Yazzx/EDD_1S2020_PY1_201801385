@@ -11,6 +11,7 @@
 #include <time.h>
 #include <conio.h>
 #include <iostream>
+#include <bits/stdc++.h>
 
 #include "ObjFicha.h"
 
@@ -40,8 +41,6 @@ public:
 
     string generarGraphviz();
 
-    void shufflear();
-    void swap (ObjFicha *a, ObjFicha *b);
 };
 
 bool Cola::isVacia() const {
@@ -131,45 +130,58 @@ bool Cola::buscar(char letra) {
 
 void Cola::llenarCola() {
 
-    // esto llena y shufflea la cola
+ ObjFicha arr_fichas[95];
 
     ObjFicha ficha_a('a', 1);
     ObjFicha ficha_e('e', 1);
     for (int i = 0; i < 12; ++i) {
-        this->insertar(ficha_a);
-        this->insertar(ficha_e);
+        arr_fichas[i] = ficha_a;
     }
-
+    for (int i = 12; i < 24; ++i) {
+        arr_fichas[i] = ficha_e;
+    }
     ObjFicha ficha_o('o', 1);
-    for (int i = 0; i < 9; ++i) {
-        this->insertar(ficha_o);
+    for (int i = 24; i < 33; ++i) {
+        arr_fichas[i] = ficha_o;
     }
 
     ObjFicha ficha_i('i', 1);
     ObjFicha ficha_s('s', 1);
-    for (int i = 0; i < 6; ++i) {
-        this->insertar(ficha_i);
-        this->insertar(ficha_s);
+    for (int i = 33; i < 39; ++i) {
+        arr_fichas[i] = ficha_i;
+    }
+    for (int i = 39; i < 45; ++i) {
+        arr_fichas[i] = ficha_s;
     }
 
     ObjFicha ficha_n('n', 1);
     ObjFicha ficha_r('r', 1);
     ObjFicha ficha_u('u', 1);
     ObjFicha ficha_d('d', 2);
-    for (int i = 0; i < 5; ++i) {
-        this->insertar(ficha_n);
-        this->insertar(ficha_r);
-        this->insertar(ficha_u);
-        this->insertar(ficha_d);
+    for (int i = 45; i < 50; ++i) {
+        arr_fichas[i] = ficha_n;
+    }
+    for (int i = 50; i < 55; ++i) {
+        arr_fichas[i] = ficha_r;
+    }
+    for (int i = 55; i < 60; ++i) {
+        arr_fichas[i] = ficha_u;
+    }
+    for (int i = 60; i < 65; ++i) {
+        arr_fichas[i] = ficha_d;
     }
 
     ObjFicha ficha_l('l', 1);
     ObjFicha ficha_t('t', 1);
     ObjFicha ficha_c('c', 3);
-    for (int i = 0; i < 4; ++i) {
-        this->insertar(ficha_l);
-        this->insertar(ficha_t);
-        this->insertar(ficha_c);
+    for (int i = 65; i < 69; ++i) {
+        arr_fichas[i] = ficha_l;
+    }
+    for (int i = 69; i < 73; ++i) {
+        arr_fichas[i] = ficha_t;
+    }
+    for (int i = 73; i < 77; ++i) {
+        arr_fichas[i] = ficha_c;
     }
 
     ObjFicha ficha_g('g', 2);
@@ -177,12 +189,20 @@ void Cola::llenarCola() {
     ObjFicha ficha_m('m', 3);
     ObjFicha ficha_p('p', 3);
     ObjFicha ficha_h('h', 4);
-    for (int i = 0; i < 2; ++i) {
-        this->insertar(ficha_g);
-        this->insertar(ficha_b);
-        this->insertar(ficha_m);
-        this->insertar(ficha_p);
-        this->insertar(ficha_h);
+    for (int i = 77; i < 79; ++i) {
+        arr_fichas[i] = ficha_g;
+    }
+    for (int i = 79; i < 81; ++i) {
+        arr_fichas[i] = ficha_b;
+    }
+    for (int i = 81; i < 83; ++i) {
+        arr_fichas[i] = ficha_m;
+    }
+    for (int i = 83; i < 85; ++i) {
+        arr_fichas[i] = ficha_p;
+    }
+    for (int i = 85; i < 87; ++i) {
+        arr_fichas[i] = ficha_h;
     }
 
     ObjFicha ficha_f('f', 4);
@@ -194,14 +214,26 @@ void Cola::llenarCola() {
     ObjFicha ficha_x('x', 8);
     ObjFicha ficha_z('z', 10);
 
-    this->insertar(ficha_f);
-    this->insertar(ficha_v);
-    this->insertar(ficha_y);
-    this->insertar(ficha_q);
-    this->insertar(ficha_j);
-    this->insertar(ficha_enie);
-    this->insertar(ficha_x);
-    this->insertar(ficha_z);
+    arr_fichas[87] = ficha_f;
+    arr_fichas[88] = ficha_v;
+    arr_fichas[89] = ficha_y;
+    arr_fichas[90] = ficha_q;
+    arr_fichas[91] = ficha_j;
+    arr_fichas[92] = ficha_enie;
+    arr_fichas[93] = ficha_x;
+    arr_fichas[94] = ficha_z;
+
+    unsigned seed = 0;
+    int n = 95;
+    srand(std::time(0));
+
+    random_shuffle(arr_fichas, arr_fichas + n);
+
+
+    for (int i = 0; i < n; ++i){
+     this->insertar(arr_fichas[i]);
+    }
+
 
 }
 
@@ -240,6 +272,7 @@ string Cola::generarGraphviz() {
 
     return lista;
 }
+
 
 
 

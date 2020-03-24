@@ -17,10 +17,10 @@ using namespace::std;
 
 class ObjJugador{
 
-private:
+public:
     string nombre;
     ListaOrdenadaPuntajes ListaPuntajesdeJugador;
-public:
+
 
     void insertarPuntaje(int punteo);
     int getPuntajeAlto();
@@ -42,7 +42,7 @@ public:
 
 void ObjJugador::insertarPuntaje(int punteo) {
 
-    this->ListaPuntajesdeJugador.insertar(punteo);
+    ListaPuntajesdeJugador.insertar(punteo);
 
 }
 

@@ -28,6 +28,9 @@ public:
         Nodo *siguiente;
     } * ultimo,*primero, *actual, *nuevo, *auxiliar;
 
+    ListaOrdenadaPuntajes(){
+        this->primero = this->ultimo = this->actual = this->nuevo = this->auxiliar = NULL;
+    }
     bool isVacia() const;
 
     void insertar(int puntaje);
@@ -64,8 +67,6 @@ void ListaOrdenadaPuntajes::insertar(int puntaje) {
 
         nuevo->siguiente = primero;
         primero = nuevo;
-
-        this->ordenar();
     }
 
     return;
@@ -80,6 +81,10 @@ void ListaOrdenadaPuntajes::mostrarLista() {
         return;
 
     }
+
+
+    this->ordenar();
+
     actual = primero;
 
     do
@@ -135,22 +140,27 @@ void ListaOrdenadaPuntajes::ordenar() {
 
         actual = primero;
 
-        while(actual != nullptr){
+        while(actual != NULL){
 
             auxiliar = actual->siguiente;
 
-            while(auxiliar != nullptr){
+            while(auxiliar != NULL){
 
-                if(auxiliar->puntaje > actual->puntaje){
+                if(auxiliar != ultimo->siguiente && actual!= NULL){
+                    cout<<"comparando "<<auxiliar->puntaje<<" con "<< actual->puntaje<<" ;\n";
+                    if(auxiliar->puntaje > actual->puntaje){
 
-                    int aux = auxiliar->puntaje;
+                        int aux = auxiliar->puntaje;
 
-                    auxiliar->puntaje = actual->puntaje;
+                        auxiliar->puntaje = actual->puntaje;
 
-                    actual->puntaje = aux;
+                        actual->puntaje = aux;
+                    }
+
+                    auxiliar = auxiliar->siguiente;
+                } else {
+                    return;
                 }
-
-                auxiliar = auxiliar->siguiente;
             }
 
             actual = actual->siguiente;

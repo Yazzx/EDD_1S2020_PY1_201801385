@@ -19,54 +19,72 @@ void generarGraphPrueba();
 ListaDobleCircular CircularDoble;
 Cola ColadeFichas;
 ListaOrdenadaJugadores ListaMejoresJugadores;
+ListaOrdenadaPuntajes ListaPuntajes;
 ArbolBinario ArbolNombres;
 
 int main() {
     std::cout << "Pruebas de estructuras" << std::endl;
-
-    // circularDoble, Arboldenombres string
-    // ordenadapuntajes: int
-
-    int insertando, buscando;
-
+int insertando, buscando;
 
     cout << "INSERTANDO" << endl;
     //getch();
 
+    ObjJugador uno;
+    uno.setNombre("Carmen");
 
-    for (size_t i = 0; i < 8; i++)
+
+    for (size_t i = 0; i < 6; i++)
     {
-        string insertando;
-        cout << "inserte algo" << endl;
+        insertando;
+        cout << "inserte algo a " << uno.getNombre()<< endl;
         cin >> insertando;
 
-        ArbolNombres.iniciarInsertar(insertando);
+        uno.ListaPuntajesdeJugador.insertar(insertando);
     }
-    //getch();
-    cout<<"Mostranding\n\n";
-    ArbolNombres.iniciarmostrar();
-    cout<<"\n\n\n\n";
-    getch();
+    uno.ListaPuntajesdeJugador.mostrarLista();
+    ListaMejoresJugadores.insertar(uno);
 
-    /*cout << "BUSCANDO" << endl;
-    getch();
-    for (size_t i = 0; i < 4; i++)
+
+    cout<<"\n\n";
+    ObjJugador dos;
+    dos.setNombre("Ithali");
+    for (size_t i = 0; i < 6; i++)
     {
-        cout << "Busque un caracter" << endl;
-        cin >> buscando;
-        ListaPuntajesdeJugador.buscar(buscando);
-    }*/
+        insertando;
+        cout << "inserte algo a " << dos.getNombre()<< endl;
+        cin >> insertando;
 
-    /* cout << "ELIMINANDO" << endl;
-    getch();
-    lista.eliminarFinal();
-    lista.mostrarLista();
-    getch(); */
+        dos.ListaPuntajesdeJugador.insertar(insertando);
+    }
+    dos.ListaPuntajesdeJugador.mostrarLista();
+    ListaMejoresJugadores.insertar(dos);
+
+    cout<<"\n\n";
+    ObjJugador tres;
+    tres.setNombre("Maria");
+    for (size_t i = 0; i < 6; i++)
+    {
+        insertando;
+        cout << "inserte algo a " << tres.getNombre()<< endl;
+        cin >> insertando;
+
+        tres.ListaPuntajesdeJugador.insertar(insertando);
+    }
+    tres.ListaPuntajesdeJugador.mostrarLista();
+    ListaMejoresJugadores.insertar(tres);
+
+
+    cout<<"\nMOSTRANDO\n\n";
+
+    ListaMejoresJugadores.mostrarLista();
+
+
+
 
     cout << "GENERANDO GRAPHVIZ" << endl;
     getch();
 
-    //ColadeFichas.llenarCola();
+   ColadeFichas.llenarCola();
    generarGraphPrueba();
 
 
@@ -83,9 +101,9 @@ void generarGraphPrueba(){
     }
     // TODO
     // NOMBREDEESTRUCTURA.generarGraphviz()
-    string kionda = ArbolNombres.iniciargenerarGraphviz();
+    string kionda = ListaMejoresJugadores.generarGraphviz();
 
-    cout<<"\n\n\n"<<kionda<<"\n\n";
+    //cout<<"\n\n\n"<<kionda<<"\n\n";
     prueba<<"digraph G {\n"
               "\n"
               " node [shape=box];\n"
