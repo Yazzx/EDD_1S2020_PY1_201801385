@@ -3,6 +3,7 @@
 
 CMakeFiles/Preoyecto1.dir/main.cpp.obj: ../ArbolBinario.h
 CMakeFiles/Preoyecto1.dir/main.cpp.obj: ../Cola.h
+CMakeFiles/Preoyecto1.dir/main.cpp.obj: ../Libreria/json.hpp
 CMakeFiles/Preoyecto1.dir/main.cpp.obj: ../ListaDobleCircular.h
 CMakeFiles/Preoyecto1.dir/main.cpp.obj: ../ListaDobleFichas.h
 CMakeFiles/Preoyecto1.dir/main.cpp.obj: ../ListaOrdenadaJugadores.h

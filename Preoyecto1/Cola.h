@@ -31,7 +31,6 @@ public:
         Nodo *siguiente;
     } * primero, *ultimo, *actual, *nuevo, *auxiliar;
 
-    bool isVacia() const;
 
     void insertar(ObjFicha ficha);
     void mostrarLista();
@@ -41,12 +40,10 @@ public:
     void llenarCola();
 
     string generarGraphviz();
+    void iniciarGenerarGraphviz();
 
 };
 
-bool Cola::isVacia() const {
-    return esVacia;
-}
 
 void Cola::insertar(ObjFicha ficha)
 {
@@ -237,6 +234,16 @@ void Cola::llenarCola() {
 
 
 }
+ObjFicha Cola::pop() {
+
+    auxiliar = new (Nodo);
+    auxiliar = this->primero;
+
+    primero = primero->siguiente;
+
+    return auxiliar->ficha;
+}
+
 
 string Cola::generarGraphviz() {
     string lista;
@@ -252,8 +259,8 @@ string Cola::generarGraphviz() {
         if(actual == ultimo){
             lista = lista + numero + ";\n";}
         else {
-                lista = lista + numero + "->";
-            }
+            lista = lista + numero + "->";
+        }
 
         contador++;
         actual = actual->siguiente;
@@ -273,15 +280,30 @@ string Cola::generarGraphviz() {
 
     return lista;
 }
+void Cola::iniciarGenerarGraphviz() {
+    ofstream prueba;
+    prueba.open("C:\\Users\\yasmi\\OneDrive\\Escritorio\\Fichas.dot", ios::out);
+    if(prueba.fail()){
+        cout<<"No se ha podido abrir el archivo"<<endl;
+        return;
+    }
+    // TODO
+    // NOMBREDEESTRUCTURA.generarGraphviz()
+    string kionda = this->generarGraphviz();
 
-ObjFicha Cola::pop() {
+    //cout<<"\n\n\n"<<kionda<<"\n\n";
+    prueba<<"digraph G {\n"
+            "\n"
+            " node [shape=box];\n"
+          << kionda<<
+          "}";
 
-    auxiliar = new (Nodo);
-    auxiliar = this->primero;
+    prueba.close();
 
-    primero = primero->siguiente;
+    system("dot -Tpng C:\\Users\\yasmi\\OneDrive\\Escritorio\\Fichas.dot > C:\\Users\\yasmi\\OneDrive\\Escritorio\\Fichas.png");
 
-    return auxiliar->ficha;
+    char url[100] = "C:\\Users\\yasmi\\OneDrive\\Escritorio\\Fichas.png";
+    ShellExecute(NULL, "open", url, NULL, NULL, SW_SHOWNORMAL);
 }
 
 

@@ -32,10 +32,12 @@ public:
 
     bool isVacia() const;
 
+    void eliminarTodo();
     void insertar(string palabra);
     void mostrarLista();
     bool buscar(string palabra);
     string generarGraphviz();
+    void iniciargenerarGraphviz();
 
 };
 
@@ -141,6 +143,7 @@ bool ListaDobleCircular::buscar(string palabra) {
 }
 
 string ListaDobleCircular::generarGraphviz() {
+
     string gg;
 
     actual = ultimo->siguiente;
@@ -178,9 +181,50 @@ string ListaDobleCircular::generarGraphviz() {
         actual = actual->siguiente;
     }while(actual != ultimo->siguiente);
 
-
-
     return gg;
+}
+
+void ListaDobleCircular::iniciargenerarGraphviz() {
+
+    ofstream prueba;
+    prueba.open("C:\\Users\\yasmi\\OneDrive\\Escritorio\\ListaCircular.dot", ios::out);
+    if(prueba.fail()){
+        cout<<"No se ha podido abrir el archivo"<<endl;
+        return;
+    }
+    // TODO
+    // NOMBREDEESTRUCTURA.generarGraphviz()
+    string kionda = this->generarGraphviz();
+
+    //cout<<"\n\n\n"<<kionda<<"\n\n";
+    prueba<<"digraph G {\n"
+            "\n"
+            " node [shape=box];\n"
+          << kionda<<
+          "}";
+
+    prueba.close();
+
+    system("dot -Tpng C:\\Users\\yasmi\\OneDrive\\Escritorio\\ListaCircular.dot > C:\\Users\\yasmi\\OneDrive\\Escritorio\\ListaCircular.png");
+
+    //
+    char url[100] = "C:\\Users\\yasmi\\OneDrive\\Escritorio\\ListaCircular.png";
+    ShellExecute(NULL, "open", url, NULL, NULL, SW_SHOWNORMAL);
+}
+
+void ListaDobleCircular::eliminarTodo() {
+
+    if(!ultimo){
+        cout<<"La lista está vacia"<<endl;
+        return;
+    }
+
+    ultimo = NULL;
+    contanodos = 0;
+
+    this->mostrarLista();
+    cout<<"Lista Mostrada\n";
+
 }
 
 
