@@ -53,6 +53,13 @@ bool yametiarchivo = false;
         // ASIGNACION DE FICHAS
         void asignarFichas();
 
+        // SETTEANDO PRIMER TURNO
+        void settearTurno();
+        int turnoactual = 0;
+
+        //INICIANDO EL JUEGO
+        void iniciarJuego();
+
 void faseJuego();
 
 
@@ -73,15 +80,47 @@ int main() {
 void faseJuego(){
     if(CircularJugadores.tienealgo){
         faseParticipantes();
-        // asignarFichas();
-    } else {
+        asignarFichas();
+        settearTurno();
+        getch();
+
+    }
+    else {
         cout<<"Deben haber jugadores para jugar!! D:"<<endl;
         getch();
         system("cls");
         menuDesplegable();
     }
 }
+void iniciarJuego(){
+    system("cls");
+    cout << endl;
+    cout << "\t\t\t---------------------" << endl; // 15
+    cout << "\t\t\t\tJUGANDO\n" << endl;
+    cout << "\t\t\t---------------------" << endl;
 
+    if(turnoactual == 1){
+        cout<<"El primer turno es de: " + jugador2.nombre <<endl;
+    } else {
+        cout<<"El primer turno es de: " + jugador1.nombre <<endl;
+    }
+    getch();
+    //TODO
+    //aca va todo lo demas
+    system("cls");
+    menuDesplegable();
+}
+void settearTurno(){
+    srand((unsigned) time(0));
+    int random;
+    random = (rand() % 10) + 1;
+    if(random <6){
+        turnoactual = 0;
+    } else {
+        turnoactual = 1;
+    }
+
+}
 
 void mostrarArbolJugadores(){
     system("cls");
@@ -158,7 +197,7 @@ void insertarJugador(){
             cout<<"Nombre del jugador guardado :D\n\n"<<endl;
             getch();
             //CircularJugadores.mostrarLista();
-            getch();
+            //getch();
             mostrarArbolJugadores();
         }
         while(!ArbolNombres.insertcionexitosa){
@@ -172,7 +211,7 @@ void insertarJugador(){
                 cout<<"Nombre del jugador guardado :D\n\n"<<endl;
                 getch();
                 //CircularJugadores.mostrarLista();
-                getch();
+                //getch();
                 mostrarArbolJugadores();
             }
         }
@@ -266,27 +305,30 @@ void asignarFichas(){
     ColadeFichas.borrarTodo();
     ColadeFichas.llenarCola();
     cout<<"Fichas Disponibles: "<<endl;
-    getch();
     ColadeFichas.iniciarGenerarGraphviz();
 
     cout<<"Asignando Fichas..."<<endl;
 
-   // jugador1 = ArbolNombres.iniciarBuscarDevolver(jugadoor1);
-    //jugador2 = ArbolNombres.iniciarBuscarDevolver(jugadoor2);
-
     for (int i = 0; i < 7; ++i) {
         ObjFicha ficha = ColadeFichas.pop();
-        jugador1.Lista7Fichas.insertar(ficha);
+        jugador1.insertarFicha(ficha);
     }
 
     cout<<"Las fichas del jugador 1 son:"<<endl;
-    jugador1.Lista7Fichas.mostrarLista();
+    jugador1.mostrarFichas();
+    cout<<endl;cout<<endl;
+
+    for (int i = 0; i < 7; ++i) {
+        ObjFicha ficha = ColadeFichas.pop();
+        jugador2.insertarFicha(ficha);
+    }
+
+    cout<<"Las fichas del jugador 2 son:"<<endl;
+    jugador2.mostrarFichas();
+    cout<<endl;cout<<endl;
+
 
 }
-
-
-
-
 
 void abrirArchivo(){
     system("cls");

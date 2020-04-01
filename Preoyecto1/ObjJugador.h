@@ -25,7 +25,7 @@ public:
 
 
 
-    void insertarFichas();
+    void insertarFicha(ObjFicha ficha);
     void mostrarFichas();
     void canjearFicha();
 
@@ -57,6 +57,14 @@ int ObjJugador::getPuntajeAlto() {
  return  this->ListaPuntajesdeJugador.getPrimero();
 }
 
+void ObjJugador::insertarFicha(ObjFicha ficha) {
+this->Lista7Fichas.insertar(ficha);
+}
+
+void ObjJugador::mostrarFichas() {
+    this->Lista7Fichas.mostrarLista();
+
+}
 
 
 #endif //PREOYECTO1_OBJJUGADOR_H

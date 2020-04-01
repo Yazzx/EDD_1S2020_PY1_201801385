@@ -27,6 +27,9 @@ public:
         Nodo *siguiente, *anterior;
     }*primero, *ultimo, *actual, *nuevo, *auxiliar;
 
+    ListaDobleFichas(){
+        this->primero = this->ultimo = this->actual = this->nuevo = this->auxiliar = NULL;
+    }
     void insertar(ObjFicha fichaa);
     void mostrarLista();
     string generarGraphviz();
@@ -76,8 +79,7 @@ void ListaDobleFichas::mostrarLista() {
     }
     actual = primero;
     while(actual != NULL){
-        //cout<< contador << " - " << actual->ficha.getLetra()<<endl;
-        printf(actual->ficha.getLetra() + "  ");
+        cout<< contador << " - " << actual->ficha.getLetra()<<endl;
         contador++;
         actual = actual->siguiente;
     }

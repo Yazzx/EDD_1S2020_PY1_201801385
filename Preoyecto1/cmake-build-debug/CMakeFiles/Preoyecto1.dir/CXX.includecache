@@ -40,6 +40,10 @@ bits/stdc++.h
 ObjFicha.h
 C:/Users/yasmi/OneDrive/Documents/GitHub/EDD_1S2020_PY1_201801385/Preoyecto1/ObjFicha.h
 
+C:/Users/yasmi/OneDrive/Documents/GitHub/EDD_1S2020_PY1_201801385/Preoyecto1/DobleCircularJugadores.h
+ObjJugador.h
+C:/Users/yasmi/OneDrive/Documents/GitHub/EDD_1S2020_PY1_201801385/Preoyecto1/ObjJugador.h
+
 C:/Users/yasmi/OneDrive/Documents/GitHub/EDD_1S2020_PY1_201801385/Preoyecto1/Libreria/json.hpp
 algorithm
 -
@@ -453,6 +457,8 @@ fstream
 -
 ListaOrdenadaPuntajes.h
 C:/Users/yasmi/OneDrive/Documents/GitHub/EDD_1S2020_PY1_201801385/Preoyecto1/ListaOrdenadaPuntajes.h
+ListaDobleFichas.h
+C:/Users/yasmi/OneDrive/Documents/GitHub/EDD_1S2020_PY1_201801385/Preoyecto1/ListaDobleFichas.h
 
 C:/Users/yasmi/OneDrive/Documents/GitHub/EDD_1S2020_PY1_201801385/Preoyecto1/main.cpp
 iostream
@@ -481,4 +487,6 @@ ArbolBinario.h
 C:/Users/yasmi/OneDrive/Documents/GitHub/EDD_1S2020_PY1_201801385/Preoyecto1/ArbolBinario.h
 ListaDobleFichas.h
 C:/Users/yasmi/OneDrive/Documents/GitHub/EDD_1S2020_PY1_201801385/Preoyecto1/ListaDobleFichas.h
+DobleCircularJugadores.h
+C:/Users/yasmi/OneDrive/Documents/GitHub/EDD_1S2020_PY1_201801385/Preoyecto1/DobleCircularJugadores.h
 
