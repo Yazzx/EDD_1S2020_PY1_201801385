@@ -9,6 +9,7 @@
 #include <fstream>
 
 #include "ListaOrdenadaPuntajes.h"
+#include "ListaDobleFichas.h"
 
 #ifndef PREOYECTO1_OBJJUGADOR_H
 #define PREOYECTO1_OBJJUGADOR_H
@@ -20,7 +21,13 @@ class ObjJugador{
 public:
     string nombre;
     ListaOrdenadaPuntajes ListaPuntajesdeJugador;
+    ListaDobleFichas Lista7Fichas;
 
+
+
+    void insertarFichas();
+    void mostrarFichas();
+    void canjearFicha();
 
     void insertarPuntaje(int punteo);
     int getPuntajeAlto();
@@ -33,7 +40,6 @@ public:
     const string &getNombre() const {
         return nombre;
     }
-
     void setNombre(const string &nombre) {
         ObjJugador::nombre = nombre;
     }
@@ -50,5 +56,7 @@ int ObjJugador::getPuntajeAlto() {
 
  return  this->ListaPuntajesdeJugador.getPrimero();
 }
+
+
 
 #endif //PREOYECTO1_OBJJUGADOR_H

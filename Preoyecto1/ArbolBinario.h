@@ -32,6 +32,9 @@ public:
     void buscar(ArbolBinario::Nodo *&arbol, string n);
     void iniciarbuscar(string nombre);
 
+    Nodo* buscarDevolver(ArbolBinario::Nodo *&arbol, string n);
+    ObjJugador iniciarBuscarDevolver(string nombre);
+
     bool yaesta = false, insertcionexitosa = false;
 
     void insertar(Nodo* &arbol, string n);
@@ -147,6 +150,7 @@ void ArbolBinario::iniciarmostrar() {
 
 string ArbolBinario::generarGraphviz(ArbolBinario::Nodo *raiz, int contador) {
 
+
     if(raiz == NULL){
         grafo += "";
     } else{
@@ -164,6 +168,7 @@ string ArbolBinario::generarGraphviz(ArbolBinario::Nodo *raiz, int contador) {
     return grafo;
 }
 void ArbolBinario::iniciargenerarGraphviz() {
+    grafo = "";
     ofstream prueba;
     prueba.open("C:\\Users\\yasmi\\OneDrive\\Escritorio\\ArbolNombres.dot", ios::out);
     if(prueba.fail()){
@@ -337,7 +342,29 @@ void ArbolBinario::iniciarPostorder() {
     ShellExecute(NULL, "open", url, NULL, NULL, SW_SHOWNORMAL);
 }
 
+ArbolBinario::Nodo *ArbolBinario::buscarDevolver(ArbolBinario::Nodo *&arbol, string n) {
+    if(arbol == NULL){
+        return NULL;
+    }
+    else {
+        string valor_raiz = arbol->nombre;
 
+        if(n.compare(valor_raiz) < 0){
+            buscar(arbol->izquierda, n);
+        } else if(n.compare(valor_raiz) > 0){
+            buscar(arbol->derecha, n);
+        } else if (arbol->nombre.compare(n) == 0){
+            return arbol;
+        } else {
+        }
+    }
+    return NULL;
+}
+
+ObjJugador ArbolBinario::iniciarBuscarDevolver(string nombre) {
+
+    return this->buscarDevolver(this->arbol, nombre)->objjugador;
+}
 
 
 #endif //PREOYECTO1_ARBOLBINARIO_H

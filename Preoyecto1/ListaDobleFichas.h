@@ -76,7 +76,8 @@ void ListaDobleFichas::mostrarLista() {
     }
     actual = primero;
     while(actual != NULL){
-        cout<< contador << " - " << actual->ficha.getLetra()<<endl;
+        //cout<< contador << " - " << actual->ficha.getLetra()<<endl;
+        printf(actual->ficha.getLetra() + "  ");
         contador++;
         actual = actual->siguiente;
     }

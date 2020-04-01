@@ -35,6 +35,7 @@ public:
     void insertar(ObjFicha ficha);
     void mostrarLista();
     bool buscar(char letra);
+    void borrarTodo();
     ObjFicha pop();
 
     void llenarCola();
@@ -304,6 +305,10 @@ void Cola::iniciarGenerarGraphviz() {
 
     char url[100] = "C:\\Users\\yasmi\\OneDrive\\Escritorio\\Fichas.png";
     ShellExecute(NULL, "open", url, NULL, NULL, SW_SHOWNORMAL);
+}
+
+void Cola::borrarTodo() {
+    this->primero = NULL;
 }
 
 

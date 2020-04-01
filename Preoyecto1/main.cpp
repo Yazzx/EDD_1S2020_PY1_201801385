@@ -15,6 +15,7 @@ using json = nlohmann::json;
 #include "ListaOrdenadaJugadores.h"
 #include "ArbolBinario.h"
 #include "ListaDobleFichas.h"
+#include "DobleCircularJugadores.h"
 
 using namespace::std;
 
@@ -37,22 +38,27 @@ bool yametiarchivo = false;
 
 // JUEGO !!
         // Participantes
-        string jugadoor1, jugadoor2;
+        ObjJugador jugador1;
+        ObjJugador jugador2;
 
         void faseParticipantes();
+        void participante1();
+        void participante2();
 
-        void faseParticipante1();
-        void faseParticipante2();
+        void insertarJugador();
 
         void mostrarArbolJugadores();
+
+
+        // ASIGNACION DE FICHAS
+        void asignarFichas();
 
 void faseJuego();
 
 
-void generarGraphPrueba();
-
 
 ListaDobleCircular CircularDoble;
+DobleCircularJugadores CircularJugadores;
 Cola ColadeFichas;
 ListaOrdenadaJugadores ListaMejoresJugadores;
 ListaOrdenadaPuntajes ListaPuntajes;
@@ -60,177 +66,22 @@ ArbolBinario ArbolNombres;
 ListaDobleFichas ListaFichasJugador;
 
 int main() {
-    ColadeFichas.llenarCola();
     meterPrimerMarco();
     return 0;
 }
 
-
-
-void faseParticipantes(){
-    faseParticipante1();
-    faseParticipante2();
-
-    cout<<"Jugadores:\n\n"<<endl;
-    cout<<"Jugador 1: " + jugadoor1<<endl;
-    cout<<"Jugador 2: " + jugadoor2<<endl;
-
-    getch();
-    system("cls");
-    menuDesplegable();
-}
-void faseParticipante1(){
-
-    system("cls");
-    cout << endl;
-    cout << "\t\t\t---------------------" << endl; // 15
-    cout << "\t\t\t   JUGADOR 1\n" << endl;
-    cout << "\t\t\t---------------------" << endl;
-
-    int choice;
-    cout<<"Jugador1: \nQue deseas usar?\n\n1.Jugador Existente\n2.Nuevo Jugador\n3.Regresar"<<endl;
-    cin>>choice;
-
-    if(choice ==1){
-        string nombre1;
-        cout<<"Por favor ingresa el nombre de tu jugador"<<endl;
-        cin>>nombre1;
-
-        ArbolNombres.yaesta = false;
-        ArbolNombres.iniciarbuscar(nombre1);
-        if(ArbolNombres.yaesta){
-            ArbolNombres.yaesta = false;
-            cout<<"Nombre del jugador 1 guardado :D\n\n"<<endl;
-            jugadoor1 = nombre1;
-            getch();
-        }
-        else {
-            cout<<"No se encuentra el nombre del jugador\n\n"<<endl;
-            getch();
-            faseParticipante1();
-
-        }
-
-    }
-    else if(choice == 2){
-        string nombre1;
-        cout<<"Por favor ingresa el nombre de tu jugador"<<endl;
-        cin>>nombre1;
-
-        ArbolNombres.iniciarInsertar(nombre1);
-        if(ArbolNombres.insertcionexitosa){
-            cout<<"Nombre del jugador 1 guardado :D\n\n"<<endl;
-            jugadoor1 = nombre1;
-            getch();
-        }
-        while(!ArbolNombres.insertcionexitosa){
-            string nombree1;
-            cout<<"Por favor ingresa el nombre de tu jugador"<<endl;
-            cin>>nombree1;
-
-            ArbolNombres.iniciarInsertar(nombree1);
-            if(ArbolNombres.insertcionexitosa){
-                cout<<"Nombre del jugador 1 guardado :D\n\n"<<endl;
-                jugadoor1 = nombree1;
-                getch();
-            }
-        }
-
-    }
-    else if(choice == 3){
-        system("cls");
-        jugadoor1 = "";
-        jugadoor2 = "";
-        menuDesplegable();
-    }
-    else {
-        cout<<"Por favor escoge una opcion valida\n\n"<<endl;
+void faseJuego(){
+    if(CircularJugadores.tienealgo){
+        faseParticipantes();
+        // asignarFichas();
+    } else {
+        cout<<"Deben haber jugadores para jugar!! D:"<<endl;
         getch();
         system("cls");
-
-        jugadoor1 = "";
-        jugadoor2 = "";
         menuDesplegable();
     }
 }
-void faseParticipante2(){
-    system("cls");
-    cout << endl;
-    cout << "\t\t\t---------------------" << endl; // 15
-    cout << "\t\t\t   JUGADOR 2\n" << endl;
-    cout << "\t\t\t---------------------" << endl;
 
-    int choice;
-    cout<<"Jugador2: \nQue deseas usar?\n\n1.Jugador Existente\n2.Nuevo Jugador\n3.Regresar"<<endl;
-    cin>>choice;
-
-    if(choice ==1){
-        string nombre1;
-        cout<<"Por favor ingresa el nombre de tu jugador"<<endl;
-        cin>>nombre1;
-
-        ArbolNombres.yaesta = false;
-        ArbolNombres.iniciarbuscar(nombre1);
-        if(ArbolNombres.yaesta){
-            if(nombre1.compare(jugadoor1) != 0){
-                ArbolNombres.yaesta = false;
-                cout<<"Nombre del jugador 2 guardado :D\n\n"<<endl;
-                jugadoor2 = nombre1;
-                getch();
-            }
-            else {
-                cout<<"El nombre que elegiste es invalido :C\n\n"<<endl;
-                getch();
-                faseParticipante2();
-
-            }
-        } else {
-            cout<<"No se encuentra el nombre del jugador\n\n"<<endl;
-            faseParticipante2();
-            getch();
-        }
-
-    }
-    else if(choice == 2){
-        string nombre1;
-        cout<<"Por favor ingresa el nombre de tu jugador"<<endl;
-        cin>>nombre1;
-
-        ArbolNombres.iniciarInsertar(nombre1);
-        if(ArbolNombres.insertcionexitosa){
-            cout<<"Nombre del jugador 1 guardado :D\n\n"<<endl;
-            jugadoor2 = nombre1;
-            getch();
-        }
-        while(!ArbolNombres.insertcionexitosa){
-            string nombree1;
-            cout<<"Por favor ingresa el nombre de tu jugador"<<endl;
-            cin>>nombree1;
-
-            ArbolNombres.iniciarInsertar(nombree1);
-            if(ArbolNombres.insertcionexitosa){
-                cout<<"Nombre del jugador 1 guardado :D\n\n"<<endl;
-                jugadoor2 = nombree1;
-                getch();
-            }
-        }
-
-    }
-    else if(choice == 3){
-        system("cls");
-        jugadoor1 = "";
-        jugadoor2 = "";
-        menuDesplegable();
-    }
-    else {
-        cout<<"Por favor escoge una opcion valida\n\n"<<endl;
-        getch();
-        system("cls");
-        jugadoor1 = "";
-        jugadoor2 = "";
-        menuDesplegable();
-    }
-}
 
 void mostrarArbolJugadores(){
     system("cls");
@@ -243,7 +94,8 @@ void mostrarArbolJugadores(){
     cout << "2. Arbol Preorder" << endl;
     cout << "3. Arbol Enorder" << endl;
     cout << "4. Arbol Postorder" << endl;
-    cout << "5. Regresar" << endl;
+    cout << "5. Insertar Jugador" << endl;
+    cout << "6. Regresar" << endl;
 
     int respuesta;
     cin >> respuesta;
@@ -270,6 +122,9 @@ void mostrarArbolJugadores(){
             ArbolNombres.post = "";
             break;
         case 5:
+            insertarJugador();
+            break;
+        case 6:
             system("cls");
             menuDesplegable();
             break;
@@ -277,6 +132,161 @@ void mostrarArbolJugadores(){
             cout << "Ingresaste un caracter no válido :C" << endl;
     }
 }
+void insertarJugador(){
+
+    system("cls");
+    cout << endl;
+    cout << "\t\t\t---------------------" << endl; // 15
+    cout << "\t\t\t  INSERTAR JUGADOR\n" << endl;
+    cout << "\t\t\t---------------------" << endl;
+
+    int choice;
+    cout<<"Jugador1: \nQue deseas hacer?\n\n1.Insertar Jugador\n2.Regresar"<<endl;
+    cin>>choice;
+
+    if(choice ==1){
+
+        string nombre1;
+        cout<<"Por favor ingresa el nombre de tu jugador"<<endl;
+        cin>>nombre1;
+
+        ObjJugador uno(nombre1);
+
+        ArbolNombres.iniciarInsertar(nombre1);
+        if(ArbolNombres.insertcionexitosa){
+            CircularJugadores.insertar(uno);
+            cout<<"Nombre del jugador guardado :D\n\n"<<endl;
+            getch();
+            //CircularJugadores.mostrarLista();
+            getch();
+            mostrarArbolJugadores();
+        }
+        while(!ArbolNombres.insertcionexitosa){
+            string nombree1;
+            cout<<"Por favor ingresa el nombre de tu jugador"<<endl;
+            cin>>nombree1;
+
+            ArbolNombres.iniciarInsertar(nombree1);
+            if(ArbolNombres.insertcionexitosa){
+                CircularJugadores.insertar(uno);
+                cout<<"Nombre del jugador guardado :D\n\n"<<endl;
+                getch();
+                //CircularJugadores.mostrarLista();
+                getch();
+                mostrarArbolJugadores();
+            }
+        }
+
+    }
+    else if(choice == 2){
+
+        mostrarArbolJugadores();
+    }
+    else {
+        cout<<"Por favor escoge una opcion valida\n\n"<<endl;
+        getch();
+        system("cls");
+
+    }
+}
+void faseParticipantes(){
+
+    system("cls");
+    cout << endl;
+
+    cout << "\t\t\t---------------------" << endl; // 15
+    cout << "\t\t\t     JUGADOR 1\n" << endl;
+    cout << "\t\t\t---------------------" << endl;
+
+    cout<<"Por favor escoge el correlativo del jugador que deseas usar"<<endl;
+    CircularJugadores.iniciargenerarGraphviz();
+    participante1();
+    getch();
+    cout << endl;cout << endl;
+
+    cout << "\t\t\t---------------------" << endl; // 15
+    cout << "\t\t\t     JUGADOR 2\n" << endl;
+    cout << "\t\t\t---------------------" << endl;
+
+    cout<<"Por favor escoge el correlativo del jugador que deseas usar"<<endl;
+    participante2();
+    getch();
+
+    cout << endl;cout << endl;
+
+    cout<<"Jugadores:\n\n"<<endl;
+    cout<<"Jugador 1: " + jugador1.nombre<<endl;
+    cout<<"Jugador 2: " + jugador2.nombre<<endl;
+
+    getch();
+}
+void participante1(){
+
+    int correlativo1;
+    cin>>correlativo1;
+
+    ObjJugador uno = CircularJugadores.buscar(correlativo1);
+    if(uno.nombre != ""){
+        jugador1 = uno;
+        cout<<"-----------------> El primer jugador es: " + jugador1.nombre<<endl;
+    } else {
+        cout<<"Numero inivalido, por favor escoge otro :c"<<endl;
+        participante1();
+    }
+}
+void participante2(){
+
+    int correlativo1;
+    cin>>correlativo1;
+
+    ObjJugador uno = CircularJugadores.buscar(correlativo1);
+    if(uno.nombre != ""){
+        if(uno.nombre == jugador1.nombre){
+            cout<<"Jugador ya escogido, por favor escoge otro :c"<<endl;
+            participante2();
+        }else {
+            jugador2 = uno;
+            cout<<"-----------------> El segundo jugador es: " + jugador2.nombre<<endl;
+        }
+    } else {
+        cout<<"Numero inivalido, por favor escoge otro :c"<<endl;
+        participante2();
+    }
+}
+
+
+void asignarFichas(){
+
+    system("cls");
+    cout << endl;
+    cout << "\t\t\t---------------------" << endl; // 15
+    cout << "\t\t\t\tFICHAS\n" << endl;
+    cout << "\t\t\t---------------------" << endl;
+
+    ColadeFichas.borrarTodo();
+    ColadeFichas.llenarCola();
+    cout<<"Fichas Disponibles: "<<endl;
+    getch();
+    ColadeFichas.iniciarGenerarGraphviz();
+
+    cout<<"Asignando Fichas..."<<endl;
+
+   // jugador1 = ArbolNombres.iniciarBuscarDevolver(jugadoor1);
+    //jugador2 = ArbolNombres.iniciarBuscarDevolver(jugadoor2);
+
+    for (int i = 0; i < 7; ++i) {
+        ObjFicha ficha = ColadeFichas.pop();
+        jugador1.Lista7Fichas.insertar(ficha);
+    }
+
+    cout<<"Las fichas del jugador 1 son:"<<endl;
+    jugador1.Lista7Fichas.mostrarLista();
+
+}
+
+
+
+
 
 void abrirArchivo(){
     system("cls");
@@ -382,8 +392,7 @@ void menuDesplegable() {
     cout << "3. Jugadores" << endl;
     cout << "4. Mejores Puntajes" << endl;
     cout << "5. Diccionario" << endl;
-    cout << "6. Fichas Disponibles" << endl;
-    cout << "7. Salir\n\n" << endl;
+    cout << "6. Salir\n\n" << endl;
     cout << endl;
 
     int respuesta;
@@ -391,7 +400,7 @@ void menuDesplegable() {
 
     switch (respuesta) {
         case 1: // jugar
-            faseParticipantes();
+            faseJuego();
             break;
         case 2:  // insertar archivo
             abrirArchivo();
@@ -407,18 +416,15 @@ void menuDesplegable() {
             system("cls");
             menuDesplegable();
             break;
-        case 6: // fichas disponibles
-            ColadeFichas.iniciarGenerarGraphviz();
-            system("cls");
-            menuDesplegable();
-            break;
-        case 7: // salir
+        case 6: // salir
             cout<< "Gracias por usar este programa!! :D"<<endl;
             getch();
             exit(0);
             break;
         default:
             cout << "Ingresaste un caracter no válido :C" << endl;
+            system("cls");
+            menuDesplegable();
     }
 
 }
@@ -435,6 +441,10 @@ void coordenar(int xpos, int ypos){
 }
 
 
+
+
+
+// EL FONDO DE LA VERGUENZA
 void generarGraphPrueba(){
 
     ofstream prueba;
@@ -461,3 +471,81 @@ void generarGraphPrueba(){
     char url[100] = "C:\\Users\\yasmi\\OneDrive\\Escritorio\\Prueba.png";
     ShellExecute(NULL, "open", url, NULL, NULL, SW_SHOWNORMAL);
 }
+/*void faseParticipante2(){
+    system("cls");
+    cout << endl;
+    cout << "\t\t\t---------------------" << endl; // 15
+    cout << "\t\t\t   JUGADOR 2\n" << endl;
+    cout << "\t\t\t---------------------" << endl;
+
+    int choice;
+    cout<<"Jugador2: \nQue deseas usar?\n\n1.Jugador Existente\n2.Nuevo Jugador\n3.Regresar"<<endl;
+    cin>>choice;
+
+    if(choice ==1){
+        string nombre1;
+        cout<<"Por favor ingresa el nombre de tu jugador"<<endl;
+        cin>>nombre1;
+
+        ArbolNombres.yaesta = false;
+        ArbolNombres.iniciarbuscar(nombre1);
+        if(ArbolNombres.yaesta){
+            if(nombre1.compare(jugadoor1) != 0){
+                ArbolNombres.yaesta = false;
+                cout<<"Nombre del jugador 2 guardado :D\n\n"<<endl;
+                jugadoor2 = nombre1;
+                getch();
+            }
+            else {
+                cout<<"El nombre que elegiste es invalido :C\n\n"<<endl;
+                getch();
+                faseParticipante2();
+
+            }
+        } else {
+            cout<<"No se encuentra el nombre del jugador\n\n"<<endl;
+            faseParticipante2();
+            getch();
+        }
+
+    }
+    else if(choice == 2){
+        string nombre1;
+        cout<<"Por favor ingresa el nombre de tu jugador"<<endl;
+        cin>>nombre1;
+
+        ArbolNombres.iniciarInsertar(nombre1);
+        if(ArbolNombres.insertcionexitosa){
+            cout<<"Nombre del jugador 2 guardado :D\n\n"<<endl;
+            jugadoor2 = nombre1;
+            getch();
+        }
+        while(!ArbolNombres.insertcionexitosa){
+            string nombree1;
+            cout<<"Por favor ingresa el nombre de tu jugador"<<endl;
+            cin>>nombree1;
+
+            ArbolNombres.iniciarInsertar(nombree1);
+            if(ArbolNombres.insertcionexitosa){
+                cout<<"Nombre del jugador 2 guardado :D\n\n"<<endl;
+                jugadoor2 = nombree1;
+                getch();
+            }
+        }
+
+    }
+    else if(choice == 3){
+        system("cls");
+        jugadoor1 = "";
+        jugadoor2 = "";
+        menuDesplegable();
+    }
+    else {
+        cout<<"Por favor escoge una opcion valida\n\n"<<endl;
+        getch();
+        system("cls");
+        jugadoor1 = "";
+        jugadoor2 = "";
+        menuDesplegable();
+    }
+}*/
