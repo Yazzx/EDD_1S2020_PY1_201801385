@@ -33,6 +33,7 @@ public:
     void insertar(ObjFicha fichaa);
     void mostrarLista();
     string generarGraphviz();
+    void iniciarGenerarGraphviz();
 };
 
 void ListaDobleFichas::insertar(ObjFicha fichaa) {
@@ -133,6 +134,34 @@ string ListaDobleFichas::generarGraphviz() {
     }
 
     return lista;
+}
+
+void ListaDobleFichas::iniciarGenerarGraphviz() {
+
+    ofstream prueba;
+    prueba.open("C:\\Users\\yasmi\\OneDrive\\Escritorio\\ListaFichasJugador.dot", ios::out);
+    if(prueba.fail()){
+        cout<<"No se ha podido abrir el archivo"<<endl;
+        return;
+    }
+    // TODO
+    // NOMBREDEESTRUCTURA.generarGraphviz()
+    string kionda = this->generarGraphviz();
+
+    //cout<<"\n\n\n"<<kionda<<"\n\n";
+    prueba<<"digraph G {\n"
+            "\n"
+            " node [shape=box];\n"
+          << kionda<<
+          "}";
+
+    prueba.close();
+
+    system("dot -Tpng C:\\Users\\yasmi\\OneDrive\\Escritorio\\ListaFichasJugador.dot > C:\\Users\\yasmi\\OneDrive\\Escritorio\\ListaFichasJugador.png");
+
+    //
+    char url[100] = "C:\\Users\\yasmi\\OneDrive\\Escritorio\\ListaFichasJugador.png";
+    ShellExecute(NULL, "open", url, NULL, NULL, SW_SHOWNORMAL);
 }
 
 

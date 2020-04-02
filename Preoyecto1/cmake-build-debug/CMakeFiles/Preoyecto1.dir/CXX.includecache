@@ -440,6 +440,24 @@ windows.h
 fstream
 -
 
+C:/Users/yasmi/OneDrive/Documents/GitHub/EDD_1S2020_PY1_201801385/Preoyecto1/Matriz.h
+iostream
+-
+conio.h
+-
+cstdlib
+-
+stdio.h
+-
+windows.h
+-
+fstream
+-
+ObjJugador.h
+C:/Users/yasmi/OneDrive/Documents/GitHub/EDD_1S2020_PY1_201801385/Preoyecto1/ObjJugador.h
+ObjFicha.h
+C:/Users/yasmi/OneDrive/Documents/GitHub/EDD_1S2020_PY1_201801385/Preoyecto1/ObjFicha.h
+
 C:/Users/yasmi/OneDrive/Documents/GitHub/EDD_1S2020_PY1_201801385/Preoyecto1/ObjFicha.h
 
 C:/Users/yasmi/OneDrive/Documents/GitHub/EDD_1S2020_PY1_201801385/Preoyecto1/ObjJugador.h
@@ -487,6 +505,8 @@ ArbolBinario.h
 C:/Users/yasmi/OneDrive/Documents/GitHub/EDD_1S2020_PY1_201801385/Preoyecto1/ArbolBinario.h
 ListaDobleFichas.h
 C:/Users/yasmi/OneDrive/Documents/GitHub/EDD_1S2020_PY1_201801385/Preoyecto1/ListaDobleFichas.h
+Matriz.h
+C:/Users/yasmi/OneDrive/Documents/GitHub/EDD_1S2020_PY1_201801385/Preoyecto1/Matriz.h
 DobleCircularJugadores.h
 C:/Users/yasmi/OneDrive/Documents/GitHub/EDD_1S2020_PY1_201801385/Preoyecto1/DobleCircularJugadores.h
 

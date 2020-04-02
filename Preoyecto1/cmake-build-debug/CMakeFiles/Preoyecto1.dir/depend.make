@@ -9,6 +9,7 @@ CMakeFiles/Preoyecto1.dir/main.cpp.obj: ../ListaDobleCircular.h
 CMakeFiles/Preoyecto1.dir/main.cpp.obj: ../ListaDobleFichas.h
 CMakeFiles/Preoyecto1.dir/main.cpp.obj: ../ListaOrdenadaJugadores.h
 CMakeFiles/Preoyecto1.dir/main.cpp.obj: ../ListaOrdenadaPuntajes.h
+CMakeFiles/Preoyecto1.dir/main.cpp.obj: ../Matriz.h
 CMakeFiles/Preoyecto1.dir/main.cpp.obj: ../ObjFicha.h
 CMakeFiles/Preoyecto1.dir/main.cpp.obj: ../ObjJugador.h
 CMakeFiles/Preoyecto1.dir/main.cpp.obj: ../main.cpp

@@ -15,6 +15,7 @@ using json = nlohmann::json;
 #include "ListaOrdenadaJugadores.h"
 #include "ArbolBinario.h"
 #include "ListaDobleFichas.h"
+#include "Matriz.h"
 #include "DobleCircularJugadores.h"
 
 using namespace::std;
@@ -59,6 +60,9 @@ bool yametiarchivo = false;
 
         //INICIANDO EL JUEGO
         void iniciarJuego();
+        bool terminado = false;
+        bool terminar();
+        int queDeseaHacer(ObjJugador jugador);
 
 void faseJuego();
 
@@ -71,8 +75,10 @@ ListaOrdenadaJugadores ListaMejoresJugadores;
 ListaOrdenadaPuntajes ListaPuntajes;
 ArbolBinario ArbolNombres;
 ListaDobleFichas ListaFichasJugador;
+Matriz Matrizz;
 
 int main() {
+
     meterPrimerMarco();
     return 0;
 }
@@ -82,6 +88,7 @@ void faseJuego(){
         faseParticipantes();
         asignarFichas();
         settearTurno();
+
         getch();
 
     }
@@ -99,16 +106,81 @@ void iniciarJuego(){
     cout << "\t\t\t\tJUGANDO\n" << endl;
     cout << "\t\t\t---------------------" << endl;
 
+    Matrizz.iniciarGenerarGraphviz();
     if(turnoactual == 1){
         cout<<"El primer turno es de: " + jugador2.nombre <<endl;
     } else {
         cout<<"El primer turno es de: " + jugador1.nombre <<endl;
     }
+
+    // turnoactual puede ser 0 o uno, si es 0 es el jugador1,
+    // si es 1, es el jugador 2;
+
+    while(!terminado){
+
+        if(turnoactual == 0){
+
+            jugador1.mostrarFichas();
+
+
+
+
+            bool terminar0 = terminar();
+            if(terminar0){
+                break;
+            } else {
+                turnoactual = 1;
+            }
+
+        } else{
+
+            jugador2.mostrarFichas();
+
+
+            bool terminar1 = terminar();
+            if(terminar1){
+                break;
+            } else {
+                turnoactual = 0;
+            }
+
+        }
+
+    }
+
+        //TODO aca muestro los punteos
+
     getch();
     //TODO
     //aca va todo lo demas
     system("cls");
     menuDesplegable();
+}
+
+int queDeseaHacer(ObjJugador jugador){
+    int choice;
+    cout<<"Que desea hacer ahora?\n1.Insertar Palabra\t\t2.Canjear Fichas"<<endl;
+    cin>>choice;
+
+    if(choice == 1){
+        cout<<"Que letra desea ingresar?"<<endl;
+
+    }
+
+}
+bool terminar(){
+    int terminar;
+    cout<<"Deseas terminar el juego?\n1.Si\t\t2.No"<<endl;
+    cin>> terminar;
+
+    if(terminar == 1){
+        return true;
+    } else if(terminar == 2){
+        return false;
+    } else {
+        cout<<"Por favor escoge una opcion valida"<<endl;
+        return false;
+    }
 }
 void settearTurno(){
     srand((unsigned) time(0));
@@ -345,26 +417,22 @@ void abrirArchivo(){
     // Leyendo Archivo
 
     int dimension = mijson.at("dimension");
-    printf("el tamaño de la tabla es: " + dimension);
+    Matrizz.iniciarMatriz(dimension);
 
-
-    //table = new Matrix(dimension);
-/*
-    // Special cells
-    // Doubles
-    for(int i = 0; i < j.at("casillas").at("dobles").size(); i++){
-        int x = j.at("casillas").at("dobles")[i].at("x");
-        int y = j.at("casillas").at("dobles")[i].at("y");
-        table->InsertSpecialNode(x, y, 2);
+    // Dobles
+    for(int i = 0; i < mijson.at("casillas").at("dobles").size(); i++){
+        int x = mijson.at("casillas").at("dobles")[i].at("x");
+        int y = mijson.at("casillas").at("dobles")[i].at("y");
+        //table->InsertSpecialNode(x, y, 2);
     }
 
     // Triples
-    for(int i = 0; i < j.at("casillas").at("triples").size(); i++){
-        int x = j.at("casillas").at("triples")[i].at("x");
-        int y = j.at("casillas").at("triples")[i].at("y");
-        table->InsertSpecialNode(x, y, 3);
+    for(int i = 0; i < mijson.at("casillas").at("triples").size(); i++){
+        int x = mijson.at("casillas").at("triples")[i].at("x");
+        int y = mijson.at("casillas").at("triples")[i].at("y");
+        //table->InsertSpecialNode(x, y, 3);
     }
-*/
+
     // Diccionario
 
     for(int i = 0; i < mijson.at("diccionario").size(); i++){

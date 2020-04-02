@@ -62,7 +62,7 @@ this->Lista7Fichas.insertar(ficha);
 }
 
 void ObjJugador::mostrarFichas() {
-    this->Lista7Fichas.mostrarLista();
+    this->Lista7Fichas.iniciarGenerarGraphviz();
 
 }
 
