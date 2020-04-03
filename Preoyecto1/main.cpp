@@ -20,9 +20,6 @@ using json = nlohmann::json;
 
 using namespace::std;
 
-// bools
-
-bool yametiarchivo = false;
 
 // PRIMERO!!
 
@@ -33,7 +30,7 @@ bool yametiarchivo = false;
     void saltarlinea();
 
 // SEGUNDO!!
-
+    bool yametiarchivo = false;
     void abrirArchivo();
     void mostrarGraphDiccionario();
 
@@ -62,7 +59,13 @@ bool yametiarchivo = false;
         void iniciarJuego();
         bool terminado = false;
         bool terminar();
-        int queDeseaHacer(ObjJugador jugador);
+        void queDeseaHacer(ObjJugador& jugador);
+        void ingresarPalabra(ObjJugador& jugador);
+        void canjearFichas(ObjJugador& jugador);
+
+        // MEJORES PUNTAJES
+        void mostrarMejoresPuntajes();
+        ObjJugador jugadorPuntaje;
 
 void faseJuego();
 
@@ -83,17 +86,72 @@ int main() {
     return 0;
 }
 
+void mostrarMejoresPuntajes(){
+
+    if(CircularJugadores.tienealgo ){
+        int choice;
+        cout<<"Que deseas hacer?\n1.Ver mejores jugadores\t\t2.Ver mejores puntajes por jugador"<<endl;
+        cin>>choice;
+
+        if(choice == 1){
+            // mejores jugadores
+            ListaMejoresJugadores.iniciarGenerarGraphviz();
+            system("cls");
+            menuDesplegable();
+
+        } else if(choice == 2){
+            CircularJugadores.iniciargenerarGraphviz();
+            int correlativo1;
+            cout<<"Por favor escoge el correlativo del jugador que deseas ver"<<endl;
+            cin>>correlativo1;
+
+            jugadorPuntaje = CircularJugadores.buscar(correlativo1);
+            if(jugadorPuntaje.nombre != ""){
+
+                cout<<"Estos son los mejores puntakes de:\n"<<endl;
+                cout<<"-----------------> " + jugadorPuntaje.nombre <<endl;
+
+                jugadorPuntaje.generarGraphMejoresPuntajes();
+                getch();
+                system("cls");
+                menuDesplegable();
+
+            } else {
+                cout<<"Numero inivalido, por favor escoge otro :c"<<endl;
+                getch();
+                system("cls");
+                menuDesplegable();
+            }
+        } else {
+            cout<<"Numero inivalido, por favor escoge otro :c"<<endl;
+            getch();
+            system("cls");
+            menuDesplegable();
+
+        }
+
+    }
+    else {
+        cout<<"Deben haber jugadores para mostrar esto!! D:"<<endl;
+        getch();
+        system("cls");
+        menuDesplegable();
+    }
+
+}
+
 void faseJuego(){
-    if(CircularJugadores.tienealgo){
+    if(CircularJugadores.tienealgo && yametiarchivo){
         faseParticipantes();
         asignarFichas();
         settearTurno();
+        iniciarJuego();
 
         getch();
 
     }
     else {
-        cout<<"Deben haber jugadores para jugar!! D:"<<endl;
+        cout<<"Deben haber jugadores y un archivo para jugar!! D:"<<endl;
         getch();
         system("cls");
         menuDesplegable();
@@ -103,27 +161,40 @@ void iniciarJuego(){
     system("cls");
     cout << endl;
     cout << "\t\t\t---------------------" << endl; // 15
-    cout << "\t\t\t\tJUGANDO\n" << endl;
+    cout << "\t\t\t\tJUEGO\n" << endl;
     cout << "\t\t\t---------------------" << endl;
 
     Matrizz.iniciarGenerarGraphviz();
+
     if(turnoactual == 1){
         cout<<"El primer turno es de: " + jugador2.nombre <<endl;
     } else {
         cout<<"El primer turno es de: " + jugador1.nombre <<endl;
     }
+    getch();
+
+    cout << endl;
+    system("cls");
+    cout << "\t\t\t---------------------" << endl; // 15
+    cout << "\t\t\t\tJUGANDO\n" << endl;
+    cout << "\t\t\t---------------------" << endl;
 
     // turnoactual puede ser 0 o uno, si es 0 es el jugador1,
     // si es 1, es el jugador 2;
 
     while(!terminado){
+        cout<<endl;cout<<endl;
+        cout<<endl;
 
         if(turnoactual == 0){
+            cout << "\t------------------------------------------" << endl; // 15
+            cout << "\t\t" + jugador1.nombre + "\n" << endl;
+            cout << "\t------------------------------------------" << endl;
 
             jugador1.mostrarFichas();
 
-
-
+            cout<<endl;
+            queDeseaHacer(jugador1);
 
             bool terminar0 = terminar();
             if(terminar0){
@@ -133,9 +204,14 @@ void iniciarJuego(){
             }
 
         } else{
+            cout << "\t------------------------------------------" << endl; // 15
+            cout << "\t\t" + jugador2.nombre + "\n" << endl;
+            cout << "\t------------------------------------------" << endl;
 
             jugador2.mostrarFichas();
 
+            cout<<endl;
+            queDeseaHacer(jugador2);
 
             bool terminar1 = terminar();
             if(terminar1){
@@ -157,14 +233,88 @@ void iniciarJuego(){
     menuDesplegable();
 }
 
-int queDeseaHacer(ObjJugador jugador){
+
+void canjearFichas(ObjJugador& jugador){
+
+    int contador = 0, choice;
+
+    while(contador < 7 ){
+
+        cout<<"Que desea hacer?\n1.Canjear letra\t2.Salir"<<endl;
+        cin>> choice;
+
+        // ingreso las fichas que necesito
+        if(choice == 1){
+            contador++;
+
+            char ficha;
+            cout<<"\nQue letra desea canjear?"<<endl;
+            cin>> ficha;
+
+            jugador.eliminarFicha(ficha);
+            ObjFicha oficha = ColadeFichas.pop();
+            jugador.insertarFicha(oficha);
+
+            cout<<"Tus fichas son: "<<endl;
+            jugador.mostrarFichas();
+            getch();
+
+        } else {
+            break;
+        }
+    }
+
+    if(choice == 1){
+        cout<<"Ya has gastado todos tus canjes por este turno!"<<endl;
+    }
+
+    return;
+}
+void ingresarPalabra(ObjJugador& jugador){
+
+    int choice;
+    while(choice == 1){
+
+        cout<<"Que desea hacer?\n1.Ingresar letra\t2.Validar"<<endl;
+        cin>> choice;
+
+        // ingreso las fichas que necesito
+        if(choice == 1){
+            char ficha;
+            cout<<"\nQue letra desea ingresar?"<<endl;
+            cin>> ficha;
+
+            char buscando = jugador.buscarFicha(ficha);
+            if(buscando != 0){
+                int x, y;
+                cout<<"Ingresa la posicion en x:\n"<<endl;
+                cin>> x;
+                cout<<"Ingresa la posicion en y:\n"<<endl;
+                cin>> y;
+
+
+
+            }
+            else {
+                cout<<"Caracter no encontrado :C\n"<<endl;
+            }
+        } else {
+            break;
+        }
+
+    }
+
+}
+
+void queDeseaHacer(ObjJugador& jugador){
     int choice;
     cout<<"Que desea hacer ahora?\n1.Insertar Palabra\t\t2.Canjear Fichas"<<endl;
     cin>>choice;
 
     if(choice == 1){
-        cout<<"Que letra desea ingresar?"<<endl;
-
+        ingresarPalabra(jugador);
+    } else{
+        canjearFichas(jugador);
     }
 
 }
@@ -262,10 +412,11 @@ void insertarJugador(){
         cin>>nombre1;
 
         ObjJugador uno(nombre1);
+        uno.insertarPuntaje(0);
 
-        ArbolNombres.iniciarInsertar(nombre1);
+        ArbolNombres.iniciarInsertar(nombre1, CircularJugadores, ListaMejoresJugadores);
         if(ArbolNombres.insertcionexitosa){
-            CircularJugadores.insertar(uno);
+            //CircularJugadores.insertar(uno);
             cout<<"Nombre del jugador guardado :D\n\n"<<endl;
             getch();
             //CircularJugadores.mostrarLista();
@@ -277,9 +428,9 @@ void insertarJugador(){
             cout<<"Por favor ingresa el nombre de tu jugador"<<endl;
             cin>>nombree1;
 
-            ArbolNombres.iniciarInsertar(nombree1);
+            ArbolNombres.iniciarInsertar(nombree1, CircularJugadores, ListaMejoresJugadores);
             if(ArbolNombres.insertcionexitosa){
-                CircularJugadores.insertar(uno);
+                //CircularJugadores.insertar(uno);
                 cout<<"Nombre del jugador guardado :D\n\n"<<endl;
                 getch();
                 //CircularJugadores.mostrarLista();
@@ -378,6 +529,7 @@ void asignarFichas(){
     ColadeFichas.llenarCola();
     cout<<"Fichas Disponibles: "<<endl;
     ColadeFichas.iniciarGenerarGraphviz();
+    getch();
 
     cout<<"Asignando Fichas..."<<endl;
 
@@ -388,6 +540,7 @@ void asignarFichas(){
 
     cout<<"Las fichas del jugador 1 son:"<<endl;
     jugador1.mostrarFichas();
+    getch();
     cout<<endl;cout<<endl;
 
     for (int i = 0; i < 7; ++i) {
@@ -397,6 +550,7 @@ void asignarFichas(){
 
     cout<<"Las fichas del jugador 2 son:"<<endl;
     jugador2.mostrarFichas();
+    getch();
     cout<<endl;cout<<endl;
 
 
@@ -519,6 +673,7 @@ void menuDesplegable() {
             mostrarArbolJugadores();
         break;
         case 4: // mejores puntajes
+            mostrarMejoresPuntajes();
 
             break;
         case 5: // Diccionario

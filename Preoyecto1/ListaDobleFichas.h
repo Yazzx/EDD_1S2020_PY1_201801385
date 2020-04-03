@@ -5,12 +5,16 @@
 #ifndef PREOYECTO1_LISTADOBLEFICHAS_H
 #define PREOYECTO1_LISTADOBLEFICHAS_H
 #include <stdio.h>
-#include <stdlib.h>
+#include <cstdlib>
 #include <string.h>
 #include <time.h>
 #include <conio.h>
 #include <iostream>
 #include <bits/stdc++.h>
+#include <cctype>
+#include <cstring>
+#include <cstdio>
+
 
 #include "ObjFicha.h"
 
@@ -34,6 +38,8 @@ public:
     void mostrarLista();
     string generarGraphviz();
     void iniciarGenerarGraphviz();
+    Nodo* buscarficha(char letra);
+    void eliminarFicha(char letra);
 };
 
 void ListaDobleFichas::insertar(ObjFicha fichaa) {
@@ -52,7 +58,8 @@ void ListaDobleFichas::insertar(ObjFicha fichaa) {
         ultimo = nuevo;
 
         return;
-    } else {
+    }
+    else {
         nuevo = new(Nodo);
         nuevo->ficha = fichaa;
         nuevo->correlativo = contanodos;
@@ -162,6 +169,55 @@ void ListaDobleFichas::iniciarGenerarGraphviz() {
     //
     char url[100] = "C:\\Users\\yasmi\\OneDrive\\Escritorio\\ListaFichasJugador.png";
     ShellExecute(NULL, "open", url, NULL, NULL, SW_SHOWNORMAL);
+}
+
+ListaDobleFichas::Nodo *ListaDobleFichas::buscarficha(char letra) {
+
+    actual = this->primero;
+
+    while(actual != NULL){
+
+        if(char(tolower(actual->ficha.getLetra())) == char(tolower(letra))){
+
+            return actual;
+
+        }
+        actual = actual->siguiente;
+    }
+
+    return NULL;
+}
+
+void ListaDobleFichas::eliminarFicha(char letra) {
+    this->actual = this->primero;
+
+    while(actual != NULL){
+        if(actual->ficha.getLetra() == letra){
+
+            if(actual == primero){
+                primero = actual->siguiente;
+                actual->siguiente->anterior = NULL;
+                return;
+            } else if(actual == ultimo){
+                ultimo->anterior->siguiente = NULL;
+                ultimo = ultimo->anterior;
+                return;
+            } else {
+                auxiliar = actual->anterior;
+
+                auxiliar->siguiente = actual->siguiente;
+                actual->siguiente->anterior = auxiliar;
+                return;
+            }
+
+        } else {
+            actual = actual->siguiente;
+        }
+    }
+
+    cout<<"No se entonctró el caracter"<<endl;
+    return;
+
 }
 
 

@@ -36,6 +36,7 @@ public:
     void insertar(int puntaje);
     void mostrarLista();
     string generarGraphviz();
+    void iniciarGenerarGraphviz();
     void ordenar();
     int getPrimero();
 };
@@ -172,6 +173,35 @@ int ListaOrdenadaPuntajes::getPrimero() {
         return 0;
     }
     return this->primero->puntaje;
+}
+
+void ListaOrdenadaPuntajes::iniciarGenerarGraphviz() {
+
+    ofstream prueba;
+    prueba.open("C:\\Users\\yasmi\\OneDrive\\Escritorio\\PuntajesIndividuales.dot", ios::out);
+    if(prueba.fail()){
+        cout<<"No se ha podido abrir el archivo"<<endl;
+        return;
+    }
+    // TODO
+    // NOMBREDEESTRUCTURA.generarGraphviz()
+    string kionda = this->generarGraphviz();
+
+    //cout<<"\n\n\n"<<kionda<<"\n\n";
+    prueba<<"digraph G {\n"
+            "\n"
+            " node [shape=box];\n"
+          << kionda<<
+          "}";
+
+    prueba.close();
+
+    system("dot -Tpng C:\\Users\\yasmi\\OneDrive\\Escritorio\\PuntajesIndividuales.dot > C:\\Users\\yasmi\\OneDrive\\Escritorio\\PuntajesIndividuales.png");
+
+    //
+    char url[100] = "C:\\Users\\yasmi\\OneDrive\\Escritorio\\PuntajesIndividuales.png";
+    ShellExecute(NULL, "open", url, NULL, NULL, SW_SHOWNORMAL);
+
 }
 
 

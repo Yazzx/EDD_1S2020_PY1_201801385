@@ -9,7 +9,9 @@
 #include <windows.h>
 #include <fstream>
 
+#include "DobleCircularJugadores.h"
 #include "ObjJugador.h"
+#include "ListaOrdenadaJugadores.h"
 
 #ifndef PREOYECTO1_ARBOLBINARIO_H
 #define PREOYECTO1_ARBOLBINARIO_H
@@ -38,7 +40,7 @@ public:
     bool yaesta = false, insertcionexitosa = false;
 
     void insertar(Nodo* &arbol, string n);
-    void iniciarInsertar(string dato);
+    void iniciarInsertar(string dato, DobleCircularJugadores &listajugadores, ListaOrdenadaJugadores &listamejoresjugadores);
 
     void mostrarArbol(Nodo* arbol, int contador);
     void iniciarmostrar();
@@ -115,14 +117,18 @@ void ArbolBinario::insertar(ArbolBinario::Nodo *&arbol, string n) {
        // cout<<"nodo insertado :D\n";
     }
 }
-void ArbolBinario::iniciarInsertar(string dato) {
+void ArbolBinario::iniciarInsertar(string dato, DobleCircularJugadores &listajugadores, ListaOrdenadaJugadores &listamejoresjugadores) {
 
+    insertcionexitosa = false;
     buscar(arbol, dato);
-   // cout<<"Esta antes? "<<yaesta<<endl;
 
     if(!yaesta){
-
+        ObjJugador uno(dato);
+        uno.insertarPuntaje(0);
+        listajugadores.insertar(uno);
+        listamejoresjugadores.insertar(uno);
         this->insertar(arbol, dato);
+
         insertcionexitosa = true;
     } else {
         cout<<"Ese nombre ya existe, por favor escoge otro :C"<<endl;

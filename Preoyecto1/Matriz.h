@@ -93,11 +93,11 @@ void Matriz::iniciarMatriz(int cuadrados) {
     raiz->pos_y = -1;
     raiz->puntaje = 1;
 
-    cout<<"Iniciando Matriz"<<endl;
+    cout<<"Iniciando Matriz..."<<endl;
 
     for (int i = 0; i < cuadrados; ++i) {
         this->crearFila(i);
-        cout<<"Fila creada"<<endl;
+        //cout<<"Fila creada"<<endl;
         this->crearColumna(i);
         //cout<<"Columna creada"<<endl;
     }
@@ -242,17 +242,22 @@ Matriz::Nodo *Matriz::crearFila(int ye) {
 
 void Matriz::insertarElemento(ObjFicha ficha, int x, int y, int puntaje) {
 
-    actual = crearNodo(ficha, x, y, puntaje);
+    nuevo = crearNodo(ficha, x, y, puntaje);
     nodoColumna = buscarColumna(x);
     nodoFila = buscarFila(y);
 
     if(nodoColumna == NULL && nodoFila == NULL){
-        cout<<"Caso 1"<<endl;
-        nodoColumna = crearColumna(x);
+        cout<<"El nodo está fuera de los límites de la matriz"<<endl;
+        /*nodoColumna = crearColumna(x);
         nodoFila = crearFila(y);
 
         nuevo = insertarColumnaOrdenada(nuevo, nodoColumna);
-        nuevo = insertarFilaOrdenada(nuevo, nodoFila);
+        nuevo = insertarFilaOrdenada(nuevo, nodoFila);*/
+        return;
+    }
+    else if(nodoColumna != NULL && nodoFila == NULL){
+        nuevo = insertarColumnaOrdenada(nuevo, nodoFila);
+        nuevo = insertarFilaOrdenada(nuevo, nodoColumna);
         return;
     }
 
@@ -329,8 +334,6 @@ string Matriz::generarGraphviz() {
     }
     grafo += "1->" +auxiliar1;
     grafo += " [dir = both];\n";
-
-    cout<<grafo<<endl;
 
     return grafo;
 

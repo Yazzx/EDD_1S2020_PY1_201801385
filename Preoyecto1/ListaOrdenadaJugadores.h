@@ -33,6 +33,7 @@ public:
     void insertar(ObjJugador jugador);
     void mostrarLista();
     string generarGraphviz();
+    void iniciarGenerarGraphviz();
     bool buscar(ObjJugador jugador);
     void ordenar();
 };
@@ -200,6 +201,35 @@ bool ListaOrdenadaJugadores::buscar(ObjJugador jugador) {
     }
 
     return false;
+}
+
+void ListaOrdenadaJugadores::iniciarGenerarGraphviz() {
+
+    ofstream prueba;
+    prueba.open("C:\\Users\\yasmi\\OneDrive\\Escritorio\\MejoresJugadores.dot", ios::out);
+    if(prueba.fail()){
+        cout<<"No se ha podido abrir el archivo"<<endl;
+        return;
+    }
+    // TODO
+    // NOMBREDEESTRUCTURA.generarGraphviz()
+    string kionda = this->generarGraphviz();
+
+    //cout<<"\n\n\n"<<kionda<<"\n\n";
+    prueba<<"digraph G {\n"
+            "\n"
+            " node [shape=box];\n"
+          << kionda<<
+          "}";
+
+    prueba.close();
+
+    system("dot -Tpng C:\\Users\\yasmi\\OneDrive\\Escritorio\\MejoresJugadores.dot > C:\\Users\\yasmi\\OneDrive\\Escritorio\\MejoresJugadores.png");
+
+    //
+    char url[100] = "C:\\Users\\yasmi\\OneDrive\\Escritorio\\MejoresJugadores.png";
+    ShellExecute(NULL, "open", url, NULL, NULL, SW_SHOWNORMAL);
+
 }
 
 #endif //PREOYECTO1_LISTAORDENADAJUGADORES_H

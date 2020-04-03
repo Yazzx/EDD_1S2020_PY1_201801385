@@ -27,7 +27,6 @@ public:
 
     void insertarFicha(ObjFicha ficha);
     void mostrarFichas();
-    void canjearFicha();
 
     void insertarPuntaje(int punteo);
     int getPuntajeAlto();
@@ -44,6 +43,10 @@ public:
         ObjJugador::nombre = nombre;
     }
 
+    char buscarFicha(char ficha);
+    void eliminarFicha(char ficha);
+
+    void generarGraphMejoresPuntajes();
 };
 
 void ObjJugador::insertarPuntaje(int punteo) {
@@ -63,7 +66,25 @@ this->Lista7Fichas.insertar(ficha);
 
 void ObjJugador::mostrarFichas() {
     this->Lista7Fichas.iniciarGenerarGraphviz();
+}
 
+char ObjJugador::buscarFicha(char ficha) {
+
+    if(this->Lista7Fichas.buscarficha(ficha) == NULL){
+        return 0;
+    }
+
+    return this->Lista7Fichas.buscarficha(ficha)->ficha.getLetra();
+}
+
+void ObjJugador::eliminarFicha(char ficha) {
+    this->Lista7Fichas.eliminarFicha(ficha);
+
+}
+
+void ObjJugador::generarGraphMejoresPuntajes() {
+
+    this->ListaPuntajesdeJugador.iniciarGenerarGraphviz();
 }
 
 
