@@ -43,11 +43,10 @@ public:
             this->abajo = NULL;
             this->puntaje = 1;
         }
-        Nodo(ObjFicha fichita, int p_x, int p_y, int puntaje){
+        Nodo(ObjFicha fichita, int p_x, int p_y){
             this->pos_x = p_x;
             this->pos_y = p_y;
             this->ficha = fichita;
-            this->puntaje = puntaje;
 
             this->siguiente = NULL;
             this->anterior = NULL;
@@ -56,7 +55,7 @@ public:
         }
 
 
-    }*actual, *nuevo, *auxiliar, *nodoColumna, *nodoFila;
+    }*actual, *nuevo, *auxiliar, *nodoColumna, *nodoFila, *parcial;
 
 
     Nodo* raiz;
@@ -68,14 +67,21 @@ public:
 
     Nodo* buscarFila(int y);
     Nodo* buscarColumna(int x);
-    Nodo* crearNodo(ObjFicha ficha, int x, int y, int puntaje);
+    Nodo* crearNodo(ObjFicha ficha, int x, int y);
     Nodo* insertarColumnaOrdenada(Nodo *&nuevo, Nodo *&cabeza_col);
     Nodo* insertarFilaOrdenada(Nodo *&nuevo, Nodo *&cabeza_fila);
 
     Nodo* crearColumna(int x);
     Nodo* crearFila(int y);
 
-    void insertarElemento(ObjFicha ficha, int x, int y, int puntaje);
+    void insertarElementoJuego(ObjFicha ficha, int x, int y);
+    Nodo* elementoexiste(int x, int y);
+
+    void insertarElementoEspecial(int puntaje, int x, int y);
+    Nodo* crearNodoEspecial(int puntaje, int x, int y);
+    Nodo* insertarEspeciaColumna(Nodo *&nuevo, Nodo *&cabeza_col);
+    Nodo* insertarEspecialFila(Nodo *&nuevo, Nodo *&cabeza_fila);
+
 
     bool bandera_fila, bandera_col;
 
@@ -105,7 +111,7 @@ void Matriz::iniciarMatriz(int cuadrados) {
 
 }
 
-Matriz::Nodo *Matriz::crearNodo(ObjFicha ficha, int x, int y, int puntaje) {
+Matriz::Nodo *Matriz::crearNodoEspecial(int puntaje, int x, int y) {
     nuevo = new (Nodo);
     nuevo->siguiente = NULL; nuevo->anterior = NULL;
     nuevo->arriba = NULL; nuevo->abajo = NULL;
@@ -113,6 +119,17 @@ Matriz::Nodo *Matriz::crearNodo(ObjFicha ficha, int x, int y, int puntaje) {
     nuevo->pos_y = y;
     nuevo->pos_x = x;
     nuevo->puntaje = puntaje;
+
+    return nuevo;
+}
+
+Matriz::Nodo *Matriz::crearNodo(ObjFicha ficha, int x, int y) {
+    nuevo = new (Nodo);
+    nuevo->siguiente = NULL; nuevo->anterior = NULL;
+    nuevo->arriba = NULL; nuevo->abajo = NULL;
+
+    nuevo->pos_y = y;
+    nuevo->pos_x = x;
     nuevo->ficha = ficha;
 
     return nuevo;
@@ -142,7 +159,7 @@ Matriz::Nodo *Matriz::buscarColumna(int x) {
     return NULL;
 }
 
-// ESTO INsERTA COMO CABECERAS
+// ESTO INsERTA LAS COSAS
 
 Matriz::Nodo *Matriz::insertarColumnaOrdenada(Nodo *&nuevo, Nodo *&cabeza_col) {
     auxiliar = cabeza_col;
@@ -224,7 +241,7 @@ Matriz::Nodo *Matriz::crearColumna(int equis) {
 
     ObjFicha uno;
     //uno.setLetra('=');
-    Nodo* hola = crearNodo(uno, equis, -1, 1);
+    Nodo* hola = crearNodo(uno, equis, -1);
 
     Nodo* columna_nueva = this->insertarColumnaOrdenada(hola, this->raiz);
     return columna_nueva;
@@ -234,30 +251,87 @@ Matriz::Nodo *Matriz::crearFila(int ye) {
     ObjFicha uno;
     //uno.setLetra('=');
 
-    Nodo* hola = crearNodo(uno, -1, ye, 1);
+    Nodo* hola = crearNodo(uno, -1, ye);
 
     Nodo* fila_nueva = this->insertarFilaOrdenada(hola, this->raiz);
     return fila_nueva;
 }
 
-void Matriz::insertarElemento(ObjFicha ficha, int x, int y, int puntaje) {
+Matriz::Nodo *Matriz::elementoexiste(int x, int y) {
+    nodoColumna = buscarColumna(x);
+    nodoFila = buscarFila(y);
 
-    nuevo = crearNodo(ficha, x, y, puntaje);
+    actual = nodoColumna;
+    while(actual  != NULL){
+        if(actual->pos_y = y){
+            parcial = actual;
+            cout<<"Match en columna!! :D"<<endl;
+            break;
+        }
+
+        actual = actual->abajo;
+    }
+
+    actual = nodoFila;
+    while(actual != NULL){
+        if(actual->pos_x = x){
+            cout<<"Match en fila!! :D"<<endl;
+            if(parcial->pos_x == actual->pos_x && parcial->pos_y == actual->pos_y){
+                cout<<"Match en nodo!! :D"<<endl;
+                return parcial;
+            }
+            break;
+        }
+        actual = actual->siguiente;
+    }
+
+    return NULL;
+}
+
+void Matriz::insertarElementoEspecial(int puntaje, int x, int y) {
+
+    nuevo = this->crearNodoEspecial(puntaje, x, y);
     nodoColumna = buscarColumna(x);
     nodoFila = buscarFila(y);
 
     if(nodoColumna == NULL && nodoFila == NULL){
         cout<<"El nodo está fuera de los límites de la matriz"<<endl;
-        /*nodoColumna = crearColumna(x);
-        nodoFila = crearFila(y);
-
-        nuevo = insertarColumnaOrdenada(nuevo, nodoColumna);
-        nuevo = insertarFilaOrdenada(nuevo, nodoFila);*/
         return;
     }
-    else if(nodoColumna != NULL && nodoFila == NULL){
-        nuevo = insertarColumnaOrdenada(nuevo, nodoFila);
-        nuevo = insertarFilaOrdenada(nuevo, nodoColumna);
+    else if(nodoColumna != NULL && nodoFila != NULL){
+        nuevo = insertarEspeciaColumna(nuevo, nodoFila);
+        nuevo = insertarEspecialFila(nuevo, nodoColumna);
+    }
+
+
+}
+
+void Matriz::insertarElementoJuego(ObjFicha ficha, int x, int y) {
+
+    nuevo = crearNodo(ficha, x, y);
+    nodoColumna = buscarColumna(x);
+    nodoFila = buscarFila(y);
+
+    if(nodoColumna == NULL && nodoFila == NULL){
+        cout<<"El nodo está fuera de los límites de la matriz"<<endl;
+        return;
+    }
+    else if(nodoColumna != NULL && nodoFila != NULL){
+
+        actual = this->elementoexiste(x, y);
+
+        if(actual == NULL) {
+            nuevo = insertarColumnaOrdenada(nuevo, nodoFila);
+            nuevo = insertarFilaOrdenada(nuevo, nodoColumna);
+        } else {
+            // si es un nodo especial
+            if(actual->ficha.getLetra() == 0 || actual->ficha.getPuntaje() == 0){
+                actual->ficha = ficha;
+            } else{
+                cout<<"Esta posicion ya está ocupada!! :C"<<endl;
+            }
+        }
+
         return;
     }
 
@@ -265,8 +339,8 @@ void Matriz::insertarElemento(ObjFicha ficha, int x, int y, int puntaje) {
 
 string Matriz::generarGraphviz() {
 
-    int contanodos = 2, contacolumnas = 1, contafilas = 1;
-    int contagrupos = 1;
+    int contanodos = 1, contacolumnas = 1, contafilas = 1;
+    int contagrupos = 0;
 
     string grafo = "";
 
@@ -276,7 +350,8 @@ string Matriz::generarGraphviz() {
              "\n"
              "\n"
              "// raiz\n"
-             " 1[label = \"Raiz(-1,-1)\" width = 1  group = 0];\n";
+             " 1[label = \"Raiz(-1,-1)\" width = 1  group = -1];\n";
+
 
 
     this->actual = this->raiz->siguiente;
@@ -286,24 +361,24 @@ string Matriz::generarGraphviz() {
         string x = to_string(actual->pos_x);
         string grupo = to_string(contagrupos);
 
-        grafo += numero + "[label = \"(" + x + ", -1)\" width = 1 group =" + grupo +"];\n";
+        grafo += "X" + x + "[label = \"(" + x + ", -1)\" width = 1 group =" + grupo +"];\n";
 
-        contanodos++;
+        contacolumnas = actual->pos_x;
         contagrupos++;
         actual = actual->siguiente;
     }
 
     grafo += " rank=same{\n";
     string auxiliar = "";
-    for (int i = 1; i < contanodos; ++i) {
+    for (int i = 0; i <= contacolumnas; ++i) {
         string numero = to_string(i);
-        auxiliar += numero + "->";
+        auxiliar += "X" + numero + "->";
     }
     if (!auxiliar.empty()) {
         auxiliar.resize(auxiliar.size() - 1);
         auxiliar.resize(auxiliar.size() - 1);
     }
-    grafo += auxiliar;
+    grafo += "1->"+auxiliar;
     grafo += " [dir = both]\n}\n";
 
     contacolumnas = contanodos-1;
@@ -317,16 +392,17 @@ string Matriz::generarGraphviz() {
         string y = to_string(actual->pos_y);
         string grupo = to_string(contagrupos);
 
-        grafo += numero + "[label = \"( -1 ," + y +")\" width = 1 group = 0 ];\n";
+        grafo += "Y"+y + "[label = \"( -1 ," + y +")\" width = 1 group = -1 ];\n";
 
+        contafilas = actual->pos_y;
         contanodos++;
         actual = actual->abajo;
     }
 
     string auxiliar1 = "";
-    for (int i = contafilas; i < contanodos; ++i) {
+    for (int i = 0; i <= contafilas; ++i) {
         string numero = to_string(i);
-        auxiliar1 += numero + "->";
+        auxiliar1 += "Y"+numero + "->";
     }
     if (!auxiliar1.empty()) {
         auxiliar1.resize(auxiliar1.size() - 1);
@@ -334,6 +410,115 @@ string Matriz::generarGraphviz() {
     }
     grafo += "1->" +auxiliar1;
     grafo += " [dir = both];\n";
+    
+    // acá creo los nodos que estan en medio de todo
+
+    int pos_x = 0, pos_y = 0;
+
+    actual = raiz->abajo;
+    while(actual != NULL){
+
+        this->auxiliar = actual->siguiente;
+        while(this->auxiliar != NULL){
+
+            string equis = to_string(this->auxiliar->pos_x);
+            string ye = to_string(this->auxiliar->pos_y);
+
+            // si auxiliar tiene una ficha
+            if(this->auxiliar->ficha.getLetra() != 0 || this->auxiliar->ficha.getLetra() != '='){
+               if(this->auxiliar->puntaje == 2){
+                   grafo += "X" + equis + "_Y" + ye + "[label = \""+ this->auxiliar->ficha.getLetra() + "\" width = 1  group = " + equis +"style = filled, fillcolor = pink];\n";
+               } else if(this->auxiliar->puntaje == 3){
+                   grafo += "X" + equis + "_Y" + ye + "[label = \""+ this->auxiliar->ficha.getLetra() + "\" width = 1  group = " + equis +"style = filled, fillcolor = lightskyblue];\n";
+               } else {
+                   grafo += "X" + equis + "_Y" + ye + "[label = \""+ this->auxiliar->ficha.getLetra() + "\" width = 1  group = " + equis +"];\n";
+               }
+            }
+            // si el auxiliar no tiene ficha pero si puntaje
+            else {
+
+                if(this->auxiliar->puntaje == 2){
+
+                    grafo += "X" + equis + "_Y" + ye + "[label = \" . \" width = 1  group = " + equis +" style = filled, fillcolor = pink];\n";
+
+                } else if(this->auxiliar->puntaje == 3){
+
+                    grafo += "X" + equis + "_Y" + ye + "[label = \" . \" width = 1  group = " + equis +" style = filled, fillcolor = lightskyblue];\n";
+
+                }
+
+            }
+            pos_x++;
+            this->auxiliar = this->auxiliar->siguiente;
+        }
+        pos_y++;
+        actual = actual->abajo;
+    }
+
+    // aca comienzo a linkear todo
+
+    // linkeando filas
+    actual = raiz->abajo;
+    while(actual != NULL){
+
+        this->auxiliar = actual->siguiente;
+        if(this->auxiliar != NULL){
+            string yee = to_string(this->auxiliar->pos_y);
+            grafo += "rank=same{\n Y" + yee + "->";
+            string auxiliar2 = "";
+            while(this->auxiliar != NULL){
+
+                string equis = to_string(this->auxiliar->pos_x);
+                string ye = to_string(this->auxiliar->pos_y);
+
+                auxiliar2 += "X" + equis + "_Y" + ye + "->";
+
+                this->auxiliar = this->auxiliar->siguiente;
+            }
+
+            if (!auxiliar2.empty()) {
+                auxiliar2.resize(auxiliar2.size() - 1);
+                auxiliar2.resize(auxiliar2.size() - 1);
+            }
+
+            auxiliar2 += "[dir = both];\n";
+            grafo += auxiliar2 + "}\n";
+        }
+
+        actual = actual->abajo;
+    }
+
+
+
+    // linkeando columnas
+
+    actual = raiz->siguiente;
+    while(actual != NULL){
+        this->auxiliar = actual->abajo;
+        if(this->auxiliar != NULL){
+            string equiss = to_string(this->auxiliar->pos_x);
+            grafo += " X" + equiss + "->";
+            string auxiliar3 = "";
+            while(this->auxiliar != NULL){
+                string equis = to_string(this->auxiliar->pos_x);
+                string ye = to_string(this->auxiliar->pos_y);
+                auxiliar3 += "X" + equis + "_Y" + ye + "->";
+
+                this->auxiliar = this->auxiliar->abajo;
+            }
+
+            if (!auxiliar3.empty()) {
+                auxiliar3.resize(auxiliar3.size() - 1);
+                auxiliar3.resize(auxiliar3.size() - 1);
+            }
+
+            auxiliar3 += "[dir = both];\n";
+            grafo += auxiliar3 + "\n";
+
+        }
+
+        actual = actual->siguiente;
+    }
 
     return grafo;
 
@@ -365,7 +550,78 @@ void Matriz::iniciarGenerarGraphviz() {
 
 }
 
+Matriz::Nodo *Matriz::insertarEspeciaColumna(Matriz::Nodo *&nuevo, Matriz::Nodo *&cabeza_col) {
+    auxiliar = cabeza_col;
+    //la bandera es para ver si necesito insertar un nodo
+    bandera_col = false;
 
+    while(true){
+        if(auxiliar->pos_x == nuevo->pos_x){
+            auxiliar->pos_y = nuevo->pos_y;
+            auxiliar->puntaje = nuevo->puntaje;
+            return auxiliar;
+        }
+        else if(auxiliar->pos_x > nuevo->pos_x){
+            bandera_col = true;
+            break;
+        }
+        if(auxiliar->siguiente != NULL){
+            auxiliar = auxiliar->siguiente;
+        }
+        else {
+            bandera_col = false;
+            break;
+        }
+    }
+
+    if(bandera_col){
+        nuevo->siguiente = auxiliar;
+        auxiliar->anterior->siguiente = nuevo;
+        nuevo->anterior = auxiliar->anterior;
+        auxiliar->anterior = nuevo;
+    }
+    else {
+        auxiliar->siguiente = nuevo;
+        nuevo->anterior = auxiliar;
+    }
+    return nuevo;
+}
+
+Matriz::Nodo *Matriz::insertarEspecialFila(Matriz::Nodo *&nuevo, Matriz::Nodo *&cabeza_fila) {
+    auxiliar = cabeza_fila;
+    bandera_fila = true;
+
+    while(true){
+        if(auxiliar->pos_y == nuevo->pos_y){
+            auxiliar->pos_x = nuevo->pos_x;
+            auxiliar->puntaje = nuevo->puntaje;
+            return auxiliar;
+        }
+        else if(auxiliar->pos_y > nuevo->pos_y){
+            bandera_fila = true;
+            break;
+        }
+        if(auxiliar->abajo != NULL){
+            auxiliar = auxiliar->abajo;
+        }
+        else {
+            bandera_fila = false;
+            break;
+        }
+    }
+
+    if(bandera_fila){
+        nuevo->abajo = auxiliar;
+        auxiliar->arriba->abajo= nuevo;
+        nuevo->arriba = auxiliar->arriba;
+        auxiliar->arriba = nuevo;
+    }
+    else {
+        auxiliar->abajo = nuevo;
+        nuevo->arriba = auxiliar;
+    }
+    return  nuevo;
+}
 
 
 #endif //PREOYECTO1_MATRIZ_H

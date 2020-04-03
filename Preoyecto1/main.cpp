@@ -147,12 +147,12 @@ void faseJuego(){
         settearTurno();
         iniciarJuego();
 
-        getch();
+        //getch();
 
     }
     else {
         cout<<"Deben haber jugadores y un archivo para jugar!! D:"<<endl;
-        getch();
+        //getch();
         system("cls");
         menuDesplegable();
     }
@@ -171,7 +171,7 @@ void iniciarJuego(){
     } else {
         cout<<"El primer turno es de: " + jugador1.nombre <<endl;
     }
-    getch();
+    //getch();
 
     cout << endl;
     system("cls");
@@ -226,7 +226,7 @@ void iniciarJuego(){
 
         //TODO aca muestro los punteos
 
-    getch();
+    //getch();
     //TODO
     //aca va todo lo demas
     system("cls");
@@ -257,7 +257,7 @@ void canjearFichas(ObjJugador& jugador){
 
             cout<<"Tus fichas son: "<<endl;
             jugador.mostrarFichas();
-            getch();
+            //getch();
 
         } else {
             break;
@@ -328,8 +328,7 @@ bool terminar(){
     } else if(terminar == 2){
         return false;
     } else {
-        cout<<"Por favor escoge una opcion valida"<<endl;
-        return false;
+        return true;
     }
 }
 void settearTurno(){
@@ -401,11 +400,6 @@ void insertarJugador(){
     cout << "\t\t\t  INSERTAR JUGADOR\n" << endl;
     cout << "\t\t\t---------------------" << endl;
 
-    int choice;
-    cout<<"Jugador1: \nQue deseas hacer?\n\n1.Insertar Jugador\n2.Regresar"<<endl;
-    cin>>choice;
-
-    if(choice ==1){
 
         string nombre1;
         cout<<"Por favor ingresa el nombre de tu jugador"<<endl;
@@ -439,17 +433,10 @@ void insertarJugador(){
             }
         }
 
-    }
-    else if(choice == 2){
+
 
         mostrarArbolJugadores();
-    }
-    else {
-        cout<<"Por favor escoge una opcion valida\n\n"<<endl;
-        getch();
-        system("cls");
 
-    }
 }
 void faseParticipantes(){
 
@@ -463,7 +450,7 @@ void faseParticipantes(){
     cout<<"Por favor escoge el correlativo del jugador que deseas usar"<<endl;
     CircularJugadores.iniciargenerarGraphviz();
     participante1();
-    getch();
+    //getch();
     cout << endl;cout << endl;
 
     cout << "\t\t\t---------------------" << endl; // 15
@@ -472,7 +459,7 @@ void faseParticipantes(){
 
     cout<<"Por favor escoge el correlativo del jugador que deseas usar"<<endl;
     participante2();
-    getch();
+    //getch();
 
     cout << endl;cout << endl;
 
@@ -480,7 +467,7 @@ void faseParticipantes(){
     cout<<"Jugador 1: " + jugador1.nombre<<endl;
     cout<<"Jugador 2: " + jugador2.nombre<<endl;
 
-    getch();
+    //getch();
 }
 void participante1(){
 
@@ -577,16 +564,17 @@ void abrirArchivo(){
     for(int i = 0; i < mijson.at("casillas").at("dobles").size(); i++){
         int x = mijson.at("casillas").at("dobles")[i].at("x");
         int y = mijson.at("casillas").at("dobles")[i].at("y");
-        //table->InsertSpecialNode(x, y, 2);
+        Matrizz.insertarElementoEspecial(2, x, y);
     }
 
     // Triples
     for(int i = 0; i < mijson.at("casillas").at("triples").size(); i++){
         int x = mijson.at("casillas").at("triples")[i].at("x");
         int y = mijson.at("casillas").at("triples")[i].at("y");
-        //table->InsertSpecialNode(x, y, 3);
+        Matrizz.insertarElementoEspecial(3, x, y);
     }
 
+    Matrizz.iniciarGenerarGraphviz();
     // Diccionario
 
     for(int i = 0; i < mijson.at("diccionario").size(); i++){
@@ -683,13 +671,14 @@ void menuDesplegable() {
             break;
         case 6: // salir
             cout<< "Gracias por usar este programa!! :D"<<endl;
-            getch();
+            //getch();
             exit(0);
             break;
         default:
             cout << "Ingresaste un caracter no válido :C" << endl;
             system("cls");
             menuDesplegable();
+            getch();
     }
 
 }

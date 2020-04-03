@@ -41,7 +41,8 @@ ObjFicha::ObjFicha(char letra, int puntaje) {
 }
 
 ObjFicha::ObjFicha() {
-
+    this->setLetra(0);
+    this->setPuntaje(0);
 }
 
 #endif //PREOYECTO1_OBJFICHA_H
