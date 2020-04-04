@@ -40,6 +40,8 @@ public:
     void iniciarGenerarGraphviz();
     Nodo* buscarficha(char letra);
     void eliminarFicha(char letra);
+    ObjFicha eliminarFichaRetorno(char letra);
+
 };
 
 void ListaDobleFichas::insertar(ObjFicha fichaa) {
@@ -217,6 +219,39 @@ void ListaDobleFichas::eliminarFicha(char letra) {
 
     cout<<"No se entonctró el caracter"<<endl;
     return;
+
+}
+
+ObjFicha ListaDobleFichas::eliminarFichaRetorno(char letra) {
+    this->actual = this->primero;
+
+    while(actual != NULL){
+        if(actual->ficha.getLetra() == letra){
+
+            ObjFicha holi = actual->ficha;
+            if(actual == primero){
+                primero = actual->siguiente;
+                actual->siguiente->anterior = NULL;
+                return holi;
+            } else if(actual == ultimo){
+                ultimo->anterior->siguiente = NULL;
+                ultimo = ultimo->anterior;
+                return holi;
+            } else {
+                auxiliar = actual->anterior;
+
+                auxiliar->siguiente = actual->siguiente;
+                actual->siguiente->anterior = auxiliar;
+                return holi;
+            }
+
+        } else {
+            actual = actual->siguiente;
+        }
+    }
+
+    cout<<"No se entonctró el caracter"<<endl;
+    return ObjFicha(0,0);
 
 }
 

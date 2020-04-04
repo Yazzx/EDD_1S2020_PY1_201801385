@@ -47,6 +47,7 @@ public:
     void eliminarFicha(char ficha);
 
     void generarGraphMejoresPuntajes();
+    ObjFicha sacarficha(char letra);
 };
 
 void ObjJugador::insertarPuntaje(int punteo) {
@@ -85,6 +86,10 @@ void ObjJugador::eliminarFicha(char ficha) {
 void ObjJugador::generarGraphMejoresPuntajes() {
 
     this->ListaPuntajesdeJugador.iniciarGenerarGraphviz();
+}
+
+ObjFicha ObjJugador::sacarficha(char letra) {
+    return this->Lista7Fichas.eliminarFichaRetorno(letra);
 }
 
 
