@@ -82,6 +82,7 @@ public:
     Nodo* insertarEspeciaColumna(Nodo *&nuevo, Nodo *&cabeza_col);
     Nodo* insertarEspecialFila(Nodo *&nuevo, Nodo *&cabeza_fila);
 
+    void getLetra(string &palabra, int x, int y);
 
     bool bandera_fila, bandera_col;
 
@@ -198,6 +199,83 @@ Matriz::Nodo *Matriz::insertarColumnaOrdenada(Nodo *&nuevo, Nodo *&cabeza_col) {
     return nuevo;
 
 }
+Matriz::Nodo *Matriz::insertarFilaOrdenada(Matriz::Nodo *&nuevo, Matriz::Nodo *&cabeza_fila) {
+    auxiliar = cabeza_fila;
+    bandera_fila = true;
+
+    while(true){
+        if(auxiliar->pos_y == nuevo->pos_y){
+            auxiliar->pos_x = nuevo->pos_x;
+            auxiliar->ficha = nuevo->ficha;
+            return auxiliar;
+        }
+        else if(auxiliar->pos_y > nuevo->pos_y){
+            bandera_fila = true;
+            break;
+        }
+        if(auxiliar->abajo != NULL){
+            auxiliar = auxiliar->abajo;
+        }
+        else {
+            bandera_fila = false;
+            break;
+        }
+    }
+
+    if(bandera_fila){
+        nuevo->abajo = auxiliar;
+        auxiliar->arriba->abajo= nuevo;
+        nuevo->arriba = auxiliar->arriba;
+        auxiliar->arriba = nuevo;
+    }
+    else {
+        auxiliar->abajo = nuevo;
+        nuevo->arriba = auxiliar;
+    }
+    return  nuevo;
+}
+
+
+Matriz::Nodo *Matriz::insertarEspecialFila(Matriz::Nodo *&nuevo, Matriz::Nodo *&cabeza_fila) {
+    auxiliar = cabeza_fila;
+    bandera_fila = true;
+
+    while(true){
+        if(auxiliar->pos_y == nuevo->pos_y){
+            auxiliar->pos_x = nuevo->pos_x;
+            if(nuevo->puntaje == 1 || nuevo->puntaje == 0){
+                auxiliar->ficha = nuevo->ficha;
+            } else {
+
+                auxiliar->puntaje = nuevo->puntaje;
+            }
+            return auxiliar;
+        }
+        else if(auxiliar->pos_y > nuevo->pos_y){
+            bandera_fila = true;
+            break;
+        }
+        if(auxiliar->abajo != NULL){
+            auxiliar = auxiliar->abajo;
+        }
+        else {
+            bandera_fila = false;
+            break;
+        }
+    }
+
+    if(bandera_fila){
+        nuevo->abajo = auxiliar;
+        auxiliar->arriba->abajo= nuevo;
+        nuevo->arriba = auxiliar->arriba;
+        auxiliar->arriba = nuevo;
+    }
+    else {
+        auxiliar->abajo = nuevo;
+        nuevo->arriba = auxiliar;
+    }
+    return  nuevo;
+}
 Matriz::Nodo *Matriz::insertarEspeciaColumna(Matriz::Nodo *&nuevo, Matriz::Nodo *&cabeza_col) {
     auxiliar = cabeza_col;
     //la bandera es para ver si necesito insertar un nodo
@@ -240,84 +318,6 @@ Matriz::Nodo *Matriz::insertarEspeciaColumna(Matriz::Nodo *&nuevo, Matriz::Nodo 
         nuevo->anterior = auxiliar;
     }
     return nuevo;
-}
-
-Matriz::Nodo *Matriz::insertarEspecialFila(Matriz::Nodo *&nuevo, Matriz::Nodo *&cabeza_fila) {
-    auxiliar = cabeza_fila;
-    bandera_fila = true;
-
-    while(true){
-        if(auxiliar->pos_y == nuevo->pos_y){
-            auxiliar->pos_x = nuevo->pos_x;
-            if(nuevo->puntaje == 1 || nuevo->puntaje == 0){
-                auxiliar->ficha = nuevo->ficha;
-            } else {
-
-                auxiliar->puntaje = nuevo->puntaje;
-            }
-            return auxiliar;
-        }
-        else if(auxiliar->pos_y > nuevo->pos_y){
-            bandera_fila = true;
-            break;
-        }
-        if(auxiliar->abajo != NULL){
-            auxiliar = auxiliar->abajo;
-        }
-        else {
-            bandera_fila = false;
-            break;
-        }
-    }
-
-    if(bandera_fila){
-        nuevo->abajo = auxiliar;
-        auxiliar->arriba->abajo= nuevo;
-        nuevo->arriba = auxiliar->arriba;
-        auxiliar->arriba = nuevo;
-    }
-    else {
-        auxiliar->abajo = nuevo;
-        nuevo->arriba = auxiliar;
-    }
-    return  nuevo;
-}
-
-
-Matriz::Nodo *Matriz::insertarFilaOrdenada(Matriz::Nodo *&nuevo, Matriz::Nodo *&cabeza_fila) {
-    auxiliar = cabeza_fila;
-    bandera_fila = true;
-
-    while(true){
-        if(auxiliar->pos_y == nuevo->pos_y){
-            auxiliar->pos_x = nuevo->pos_x;
-            auxiliar->ficha = nuevo->ficha;
-            return auxiliar;
-        }
-        else if(auxiliar->pos_y > nuevo->pos_y){
-            bandera_fila = true;
-            break;
-        }
-        if(auxiliar->abajo != NULL){
-            auxiliar = auxiliar->abajo;
-        }
-        else {
-            bandera_fila = false;
-            break;
-        }
-    }
-
-    if(bandera_fila){
-        nuevo->abajo = auxiliar;
-        auxiliar->arriba->abajo= nuevo;
-        nuevo->arriba = auxiliar->arriba;
-        auxiliar->arriba = nuevo;
-    }
-    else {
-        auxiliar->abajo = nuevo;
-        nuevo->arriba = auxiliar;
-    }
-    return  nuevo;
 }
 
 // Esto inicia la incersion de cabeceras
@@ -384,7 +384,7 @@ void Matriz::insertarElementoEspecial(int puntaje, ObjFicha ficha, int x, int y)
     nodoColumna = buscarColumna(x);
     nodoFila = buscarFila(y);
 
-    if(nodoColumna == NULL && nodoFila == NULL){
+    if(nodoColumna == NULL || nodoFila == NULL){
         cout<<"El nodo está fuera de los límites de la matriz"<<endl;
         return;
     }
@@ -393,37 +393,6 @@ void Matriz::insertarElementoEspecial(int puntaje, ObjFicha ficha, int x, int y)
         nuevo = insertarEspecialFila(nuevo, nodoColumna);
     }
 
-
-}
-
-void Matriz::insertarElementoJuego(ObjFicha ficha, int x, int y) {
-
-    nuevo = crearNodo(ficha, x, y);
-    nodoColumna = buscarColumna(x);
-    nodoFila = buscarFila(y);
-
-    if(nodoColumna == NULL || nodoFila == NULL){
-        cout<<"El nodo está fuera de los límites de la matriz"<<endl;
-        return;
-    }
-    else if(nodoColumna != NULL && nodoFila != NULL){
-
-        actual = this->elementoexiste(x, y);
-
-        if(actual == NULL) {
-            nuevo = insertarColumnaOrdenada(nuevo, nodoFila);
-            nuevo = insertarFilaOrdenada(nuevo, nodoColumna);
-        } else {
-            // si es un nodo especial
-            if(actual->ficha.getLetra() == 0 || actual->ficha.getPuntaje() == 0){
-                actual->ficha = ficha;
-            } else{
-                cout<<"Esta posicion ya está ocupada!! :C"<<endl;
-            }
-        }
-
-        return;
-    }
 
 }
 
@@ -440,8 +409,7 @@ string Matriz::generarGraphviz() {
              "\n"
              "\n"
              "// raiz\n"
-             " 1[label = \"Raiz(-1,-1)\" width = 1  group = -1];\n";
-
+             "1[label = \"Raiz(-1,-1)\" width = 1  group = -1];\n";
 
 
     this->actual = this->raiz->siguiente;
@@ -503,12 +471,16 @@ string Matriz::generarGraphviz() {
 
     // acá creo los nodos que estan en medio de todo
 
+
+    // TODO  ACA COMIENZA LO QUE ES MUERTE
     int pos_x = 0, pos_y = 0;
 
+    string auxiliarnodos = "\n";
     actual = raiz->abajo;
     while(actual != NULL){
 
         this->auxiliar = actual->siguiente;
+
         while(this->auxiliar != NULL){
 
             string equis = to_string(this->auxiliar->pos_x);
@@ -516,24 +488,24 @@ string Matriz::generarGraphviz() {
 
             // si auxiliar tiene una ficha
             if(this->auxiliar->ficha.getLetra() != 0 || this->auxiliar->ficha.getLetra() != '='){
-               if(this->auxiliar->puntaje == 2){
-                   grafo += "X" + equis + "_Y" + ye + "[label = \""+ this->auxiliar->ficha.getLetra() + ".\" width = 1  group = " + equis +", style = filled, fillcolor = pink];\n";
-               } else if(this->auxiliar->puntaje == 3){
-                   grafo += "X" + equis + "_Y" + ye + "[label = \""+ this->auxiliar->ficha.getLetra() + ".\" width = 1  group = " + equis +", style = filled, fillcolor = lightskyblue];\n";
-               } else {
-                   grafo += "X" + equis + "_Y" + ye + "[label = \""+ this->auxiliar->ficha.getLetra() + ".\" width = 1  group = " + equis +"];\n";
-               }
+                if(this->auxiliar->puntaje == 2){
+                    auxiliarnodos += "X" + equis + "_Y" + ye + "[label = \""+ this->auxiliar->ficha.getLetra() + ".\" width = 1  group = " + equis +", style = filled, fillcolor = pink];\n";
+                } else if(this->auxiliar->puntaje == 3){
+                    auxiliarnodos += "X" + equis + "_Y" + ye + "[label = \""+ this->auxiliar->ficha.getLetra() + ".\" width = 1  group = " + equis +", style = filled, fillcolor = lightskyblue];\n";
+                } else {
+                    grafo += "X" + equis + "_Y" + ye + "[label = \""+ this->auxiliar->ficha.getLetra() + ".\" width = 1  group = " + equis +"];\n";
+                }
             }
-            // si el auxiliar no tiene ficha pero si puntaje
+                // si el auxiliar no tiene ficha pero si puntaje
             else {
 
                 if(this->auxiliar->puntaje == 2){
 
-                    grafo += "X" + equis + "_Y" + ye + "[label = \" .. \", width = 1,  group = " + equis +", style = filled, fillcolor = pink];\n";
+                    auxiliarnodos += "X" + equis + "Y" + ye + " [label = \" ..\", width = 1,  group = " + equis +", style = filled, fillcolor = pink];\n";
 
                 } else if(this->auxiliar->puntaje == 3){
 
-                    grafo += "X" + equis + "_Y" + ye + "[label = \" .. \", width = 1,  group = " + equis +", style = filled, fillcolor = lightskyblue];\n";
+                    auxiliarnodos += "X" + equis + "Y" + ye + " [label = \" .. \", width = 1,  group = " + equis +", style = filled, fillcolor = lightskyblue];\n";
 
                 }
 
@@ -544,6 +516,9 @@ string Matriz::generarGraphviz() {
         pos_y++;
         actual = actual->abajo;
     }
+
+    grafo += auxiliarnodos + "\n";
+    // TODO  ACA TERMINA TODO LO QUE ESTÁ MAL CON EL MUNDO
 
     // aca comienzo a linkear todo
 
@@ -640,7 +615,30 @@ void Matriz::iniciarGenerarGraphviz() {
 
 }
 
+void Matriz::getLetra(string &palabra, int x, int y) {
 
+    actual = raiz->abajo;
+    while(actual != NULL){
+
+        if(actual->pos_y == y){
+
+            auxiliar = actual->siguiente;
+            while(auxiliar != NULL){
+
+                if(auxiliar->pos_y == y && auxiliar->pos_x == x){
+
+                    palabra += auxiliar->ficha.getLetra();
+
+                }
+
+                auxiliar = auxiliar->siguiente;
+            }
+        }
+
+        actual = actual->abajo;
+    }
+
+}
 
 
 #endif //PREOYECTO1_MATRIZ_H
