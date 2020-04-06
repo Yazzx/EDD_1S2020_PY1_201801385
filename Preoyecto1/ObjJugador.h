@@ -23,7 +23,11 @@ public:
     ListaOrdenadaPuntajes ListaPuntajesdeJugador;
     ListaDobleFichas Lista7Fichas;
 
+    int puntaje_parcial;
 
+    int getPuntajeParcial() const;
+
+    void setPuntajeParcial(int puntajeParcial);
 
     void insertarFicha(ObjFicha ficha);
     void mostrarFichas();
@@ -48,6 +52,8 @@ public:
 
     void generarGraphMejoresPuntajes();
     ObjFicha sacarficha(char letra);
+    void copiarAuxiliar(ListaDobleFichas &ListaAuxiliar);
+    void copiarOriginal(ListaDobleFichas &ListaAuxiliar);
 };
 
 void ObjJugador::insertarPuntaje(int punteo) {
@@ -90,6 +96,25 @@ void ObjJugador::generarGraphMejoresPuntajes() {
 
 ObjFicha ObjJugador::sacarficha(char letra) {
     return this->Lista7Fichas.eliminarFichaRetorno(letra);
+}
+
+void ObjJugador::copiarAuxiliar(ListaDobleFichas &ListaAuxiliar) {
+
+    ListaAuxiliar =  this->Lista7Fichas;
+
+}
+
+void ObjJugador::copiarOriginal(ListaDobleFichas &ListaAuxiliar) {
+
+    this->Lista7Fichas = ListaAuxiliar;
+}
+
+int ObjJugador::getPuntajeParcial() const {
+    return puntaje_parcial;
+}
+
+void ObjJugador::setPuntajeParcial(int puntajeParcial) {
+    puntaje_parcial = puntajeParcial;
 }
 
 

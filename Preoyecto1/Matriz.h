@@ -74,7 +74,6 @@ public:
     Nodo* crearColumna(int x);
     Nodo* crearFila(int y);
 
-    void insertarElementoJuego(ObjFicha ficha, int x, int y);
     Nodo* elementoexiste(int x, int y);
 
     void insertarElementoEspecial(int puntaje, ObjFicha ficha, int x, int y);
@@ -82,7 +81,7 @@ public:
     Nodo* insertarEspeciaColumna(Nodo *&nuevo, Nodo *&cabeza_col);
     Nodo* insertarEspecialFila(Nodo *&nuevo, Nodo *&cabeza_fila);
 
-    void getLetra(string &palabra, int x, int y);
+    void getLetra(string &palabra, int &puntaje, int x, int y);
 
     bool bandera_fila, bandera_col;
 
@@ -242,13 +241,19 @@ Matriz::Nodo *Matriz::insertarEspecialFila(Matriz::Nodo *&nuevo, Matriz::Nodo *&
 
     while(true){
         if(auxiliar->pos_y == nuevo->pos_y){
-            auxiliar->pos_x = nuevo->pos_x;
-            if(nuevo->puntaje == 1 || nuevo->puntaje == 0){
-                auxiliar->ficha = nuevo->ficha;
-            } else {
 
-                auxiliar->puntaje = nuevo->puntaje;
+            if(auxiliar->ficha.getLetra() == 0 || auxiliar->ficha.getLetra() == '=' ){
+                auxiliar->pos_x = nuevo->pos_x;
+                if(nuevo->puntaje == 1 || nuevo->puntaje == 0){
+                    auxiliar->ficha = nuevo->ficha;
+                } else {
+
+                    auxiliar->puntaje = nuevo->puntaje;
+                }
+
             }
+
+
             return auxiliar;
         }
         else if(auxiliar->pos_y > nuevo->pos_y){
@@ -283,13 +288,18 @@ Matriz::Nodo *Matriz::insertarEspeciaColumna(Matriz::Nodo *&nuevo, Matriz::Nodo 
 
     while(true){
         if(auxiliar->pos_x == nuevo->pos_x){
-            auxiliar->pos_y = nuevo->pos_y;
 
-            if(nuevo->puntaje == 1 || nuevo->puntaje == 0){
-                auxiliar->ficha = nuevo->ficha;
+            if(auxiliar->ficha.getLetra() == 0 || auxiliar->ficha.getLetra() == '=' ){
+                auxiliar->pos_y = nuevo->pos_y;
+
+                if(nuevo->puntaje == 1 || nuevo->puntaje == 0){
+                    auxiliar->ficha = nuevo->ficha;
+                } else {
+
+                    auxiliar->puntaje = nuevo->puntaje;
+                }
             } else {
-
-                auxiliar->puntaje = nuevo->puntaje;
+                cout<<"Esta casilla ya está llena"<< endl;
             }
 
             return auxiliar;
@@ -615,7 +625,7 @@ void Matriz::iniciarGenerarGraphviz() {
 
 }
 
-void Matriz::getLetra(string &palabra, int x, int y) {
+void Matriz::getLetra(string &palabra, int &puntaje, int x, int y) {
 
     actual = raiz->abajo;
     while(actual != NULL){
@@ -628,7 +638,11 @@ void Matriz::getLetra(string &palabra, int x, int y) {
                 if(auxiliar->pos_y == y && auxiliar->pos_x == x){
 
                     palabra += auxiliar->ficha.getLetra();
-
+                    int aux = 0;
+                    aux = auxiliar->ficha.getPuntaje()*auxiliar->puntaje;
+                    puntaje += aux;
+                    //encontrado = true;
+                    break;
                 }
 
                 auxiliar = auxiliar->siguiente;
@@ -637,6 +651,9 @@ void Matriz::getLetra(string &palabra, int x, int y) {
 
         actual = actual->abajo;
     }
+
+    //cout<<"No se encontró la posicion :C"<<endl;
+    //encontrado = false;
 
 }
 

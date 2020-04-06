@@ -23,57 +23,57 @@ using namespace::std;
 
 // PRIMERO!!
 
-    int linea;
-    void menuDesplegable();
-    void coordenar(int xpos, int ypos);
-    void meterPrimerMarco();
-    void saltarlinea();
+int linea;
+void menuDesplegable();
+void coordenar(int xpos, int ypos);
+void meterPrimerMarco();
+void saltarlinea();
 
 // SEGUNDO!!
-    bool yametiarchivo = false;
-    void abrirArchivo();
-    void mostrarGraphDiccionario();
+bool yametiarchivo = false;
+void abrirArchivo();
+void mostrarGraphDiccionario();
 
 // JUEGO !!
 
-        int puntaje1 = 0;
-        int puntaje2 = 0;
+int puntaje1 = 0;
+int puntaje2 = 0;
 
-        // Participantes
-        ObjJugador jugador1;
-        ObjJugador jugador2;
+// Participantes
+ObjJugador jugador1;
+ObjJugador jugador2;
 
-        void faseParticipantes();
-        void participante1();
-        void participante2();
+void faseParticipantes();
+void participante1();
+void participante2();
 
-        void insertarJugador();
+void insertarJugador();
 
-        void mostrarArbolJugadores();
+void mostrarArbolJugadores();
 
 
-        // ASIGNACION DE FICHAS
-        void asignarFichas();
+// ASIGNACION DE FICHAS
+void asignarFichas();
 
-        // SETTEANDO PRIMER TURNO
-        void settearTurno();
-        int turnoactual = 0;
+// SETTEANDO PRIMER TURNO
+void settearTurno();
+int turnoactual = 0;
 
-        //INICIANDO EL JUEGO
-        void iniciarJuego();
-        bool terminado = false;
-        bool terminar();
-        void queDeseaHacer(ObjJugador& jugador, int &puntaje, Cola &ColadeFichas);
-        void ingresarPalabra(ObjJugador& jugador, int &puntaje, Cola &ColadeFichas);
-        void canjearFichas(ObjJugador& jugador);
+//INICIANDO EL JUEGO
+void iniciarJuego();
+bool terminado = false;
+bool terminar();
+void queDeseaHacer(ObjJugador& jugador, int &puntaje, Cola &ColadeFichas);
+void ingresarPalabra(ObjJugador& jugador, int &puntaje, Cola &ColadeFichas);
+void canjearFichas(ObjJugador& jugador);
 
-        // MEJORES PUNTAJES
-        void mostrarMejoresPuntajes();
-        ObjJugador jugadorPuntaje;
+// MEJORES PUNTAJES
+void mostrarMejoresPuntajes();
+ObjJugador jugadorPuntaje;
 
 void faseJuego();
 
-
+int dimensionP;
 
 ListaDobleCircular CircularDoble;
 DobleCircularJugadores CircularJugadores;
@@ -82,6 +82,7 @@ ListaOrdenadaJugadores ListaMejoresJugadores;
 ListaOrdenadaPuntajes ListaPuntajes;
 ArbolBinario ArbolNombres;
 ListaDobleFichas ListaFichasJugador;
+ListaDobleFichas ListaFichasAux;
 Matriz Matrizz;
 Matriz MatrizAuxiliar;
 
@@ -163,7 +164,7 @@ void faseJuego(){
     }
 }
 void iniciarJuego(){
-    system("cls");
+    //system("cls");
     cout << endl;
     cout << "\t\t\t---------------------" << endl; // 15
     cout << "\t\t\t\tJUEGO\n" << endl;
@@ -231,14 +232,20 @@ void iniciarJuego(){
 
     }
 
-        //TODO aca muestro los punteos
+    //TODO aca muestro los punteos
+
+    jugador1.insertarPuntaje(jugador1.getPuntajeParcial());
+    jugador2.insertarPuntaje(jugador2.getPuntajeParcial());
 
     cout << "\t------------------------------------------" << endl;
     cout << "\t\t\t PUNTAJES FINALES\n" << endl;
     cout << "\t------------------------------------------" << endl;
 
-    cout << "\t--------------------------> Jugador 1: " + puntaje1 << endl;
-    cout << "\t--------------------------> Jugador 2: " + puntaje2 << endl;
+    cout << "\t--------------------------> Jugador 1: "<<jugador1.getPuntajeParcial() << endl;
+    cout << "\t--------------------------> Jugador 2: "<<jugador2.getPuntajeParcial() << endl;
+
+    jugador1.setPuntajeParcial(0);
+    jugador2.setPuntajeParcial(0);
 
     puntaje1 = 0;
     puntaje2 = 0;
@@ -288,17 +295,18 @@ void canjearFichas(ObjJugador& jugador){
 }
 void ingresarPalabra(ObjJugador& jugador, int &puntaje, Cola &ColadeFichas){
 
+
+    jugador.copiarAuxiliar(ListaFichasAux);
+
+    int choice = 1; int contafichas = 7; int insertadas = 0;
+    // para ver cuantas fichas despaché
+    // para ver cuantos get siguientes
+
     // palabra que se esta insertando
     string palabra  = "";
 
-    int choice = 1;
-    // para ver cuantas fichas despaché
-    int contafichas = 7;
-    // para ver cuantos get siguientes
-    int insertadas = 0;
-
-    int xo = -1, yo = -1;
-    int x = 0, y = 0;
+    int xo = -1, yo = -1; int x = 0, y = 0;
+    int x_ini = 0, y_ini = 0, x_fin = 0, y_fin = 0;
 
     int intento = 1;
 
@@ -318,9 +326,6 @@ void ingresarPalabra(ObjJugador& jugador, int &puntaje, Cola &ColadeFichas){
             ObjFicha meter = jugador.sacarficha(ficha);
 
             if(meter.getLetra() != 0){
-
-                // TODO ARREGLAR LO DEL PUNTAJE
-                puntaje += meter.getPuntaje();
 
                 contafichas--;
                 insertadas++;
@@ -360,41 +365,127 @@ void ingresarPalabra(ObjJugador& jugador, int &puntaje, Cola &ColadeFichas){
     // SI NO ES VÁLIDO, MATRIZAUX = MATRIZZ
 
 
+    int puntaje_final = 0;
     cout<<"xo= "<<xo<< " xf= "<<x<<endl;
     cout<<"yo= "<<yo<<" yf= "<<y<<endl;
 
     if(xo == x){
-
+        int auxxxx = 0;
         cout<<"Validando vertical"<<endl;
 
-        for (int i = 0; i < insertadas; ++i) {
+        // aca miro donde de verdad comienza y termina la palabra
+        for (int j = yo; j >= 0; --j) {
+            string palabraaux = "";
+            MatrizAuxiliar.getLetra(palabraaux, auxxxx, xo, j);
+            if(palabraaux == ""){
+                break;
+            } else {
+                y_ini = j;
+            }
+        }
+        for (int k = y; k < dimensionP; ++k) {
 
-            MatrizAuxiliar.getLetra(palabra, xo, yo);
-            yo++;
+            string palabraaux = "";
+            MatrizAuxiliar.getLetra(palabraaux, auxxxx, xo, k);
+            if(palabraaux == ""){
+                break;
+            } else {
+                y_fin = k;
+            }
+
+        }
+
+
+        // aca formo la palabra
+        int numero = y_fin-y_ini;
+        for (int i = 0; i <= numero; ++i) {
+
+            MatrizAuxiliar.getLetra(palabra, puntaje_final, xo, y_ini);
+            y_ini++;
             cout<<palabra<<endl;
 
-            if(yo == y+1){
+            if(y_ini == y_fin+1){
                 break;
             }
         }
 
 
-    } else if(yo == y){
+    }
+    else if(yo == y){
 
         cout<<"validando horizontal"<<endl;
 
+        int nosirve = 0;
+        // aca miro donde de verdad comienza y termina la palabra
+        for (int j = xo; j >= 0; --j) {
+            string palabraaux = "";
+            MatrizAuxiliar.getLetra(palabraaux, nosirve, j, yo);
+            if(palabraaux == ""){
+                break;
+            } else {
+                x_ini = j;
+            }
+        }
+        for (int k = y; k < dimensionP; ++k) {
 
-    } else {
+            string palabraaux = "";
+            MatrizAuxiliar.getLetra(palabraaux, nosirve, k, yo);
+            if(palabraaux == ""){
+                break;
+            } else {
+                x_fin = k;
+            }
+
+        }
+
+
+        int numero = x_fin-x_ini;
+        for (int i = 0; i <= numero; ++i) {
+
+            MatrizAuxiliar.getLetra(palabra, puntaje_final, x_ini, yo);
+            x_ini++;
+            cout<<palabra<<endl;
+
+            if(x_ini == x_fin+1){
+                break;
+            }
+        }
+
+    }
+    else {
         cout<<"Las fichas solo se leen vertical u horizontal.\n"
               "Pierde turno por feo >:C"<<endl;
     }
 
+    if(CircularDoble.buscar(palabra)){
 
-    cout<<"------------------> Volviendo a meter fichas. Hay "<<contafichas<<endl;
-    for (int i = contafichas; i < 7; ++i) {
-        ObjFicha oficha = ColadeFichas.pop();
-        jugador.insertarFicha(oficha);
+        cout<<"----------- PALABRA ENCONTRADA -----------"<<endl;
+        Matrizz = MatrizAuxiliar;
+
+        int suma = puntaje_final + jugador.getPuntajeParcial();
+        jugador.setPuntajeParcial(suma);
+
+        cout<<"----------- TU PUNTAJE ES: "<< puntaje_final<<endl;
+        puntaje_final = 0;
+
+        cout<<"------------------> Volviendo a meter fichas. Hay "<<contafichas<<endl;
+        for (int i = contafichas; i <= 7; ++i) {
+            ObjFicha oficha = ColadeFichas.pop();
+            jugador.insertarFicha(oficha);
+        }
+
+
+
     }
+    else {
+
+        cout<<"----------- PALABRA NO ENCONTRADA -----------"<<endl;
+        MatrizAuxiliar = Matrizz;
+        jugador.copiarOriginal(ListaFichasAux);
+        puntaje_final = 0;
+
+    }
+
 
     return;
 }
@@ -494,14 +585,28 @@ void insertarJugador(){
     cout << "\t\t\t---------------------" << endl;
 
 
-        string nombre1;
+    string nombre1;
+    cout<<"Por favor ingresa el nombre de tu jugador"<<endl;
+    cin>>nombre1;
+
+    ObjJugador uno(nombre1);
+    uno.insertarPuntaje(0);
+
+    ArbolNombres.iniciarInsertar(nombre1, CircularJugadores, ListaMejoresJugadores);
+    if(ArbolNombres.insertcionexitosa){
+        //CircularJugadores.insertar(uno);
+        cout<<"Nombre del jugador guardado :D\n\n"<<endl;
+        getch();
+        //CircularJugadores.mostrarLista();
+        //getch();
+        mostrarArbolJugadores();
+    }
+    while(!ArbolNombres.insertcionexitosa){
+        string nombree1;
         cout<<"Por favor ingresa el nombre de tu jugador"<<endl;
-        cin>>nombre1;
+        cin>>nombree1;
 
-        ObjJugador uno(nombre1);
-        uno.insertarPuntaje(0);
-
-        ArbolNombres.iniciarInsertar(nombre1, CircularJugadores, ListaMejoresJugadores);
+        ArbolNombres.iniciarInsertar(nombree1, CircularJugadores, ListaMejoresJugadores);
         if(ArbolNombres.insertcionexitosa){
             //CircularJugadores.insertar(uno);
             cout<<"Nombre del jugador guardado :D\n\n"<<endl;
@@ -510,25 +615,11 @@ void insertarJugador(){
             //getch();
             mostrarArbolJugadores();
         }
-        while(!ArbolNombres.insertcionexitosa){
-            string nombree1;
-            cout<<"Por favor ingresa el nombre de tu jugador"<<endl;
-            cin>>nombree1;
-
-            ArbolNombres.iniciarInsertar(nombree1, CircularJugadores, ListaMejoresJugadores);
-            if(ArbolNombres.insertcionexitosa){
-                //CircularJugadores.insertar(uno);
-                cout<<"Nombre del jugador guardado :D\n\n"<<endl;
-                getch();
-                //CircularJugadores.mostrarLista();
-                //getch();
-                mostrarArbolJugadores();
-            }
-        }
+    }
 
 
 
-        mostrarArbolJugadores();
+    mostrarArbolJugadores();
 
 }
 void faseParticipantes(){
@@ -618,8 +709,8 @@ void asignarFichas(){
         jugador1.insertarFicha(ficha);
     }
 
-    cout<<"Las fichas del jugador 1 son:"<<endl;
-    jugador1.mostrarFichas();
+    //cout<<"Las fichas del jugador 1 son:"<<endl;
+    //jugador1.mostrarFichas();
     getch();
     cout<<endl;cout<<endl;
 
@@ -628,8 +719,8 @@ void asignarFichas(){
         jugador2.insertarFicha(ficha);
     }
 
-    cout<<"Las fichas del jugador 2 son:"<<endl;
-    jugador2.mostrarFichas();
+    //cout<<"Las fichas del jugador 2 son:"<<endl;
+    //jugador2.mostrarFichas();
     getch();
     cout<<endl;cout<<endl;
 
@@ -652,6 +743,7 @@ void abrirArchivo(){
 
     int dimension = mijson.at("dimension");
     Matrizz.iniciarMatriz(dimension);
+    dimensionP = dimension-1;
 
     // Dobles
     for(int i = 0; i < mijson.at("casillas").at("dobles").size(); i++){
@@ -670,7 +762,7 @@ void abrirArchivo(){
     }
 
     MatrizAuxiliar = Matrizz;
-    Matrizz.iniciarGenerarGraphviz();
+    //Matrizz.iniciarGenerarGraphviz();
     // Diccionario
 
     for(int i = 0; i < mijson.at("diccionario").size(); i++){
@@ -755,7 +847,7 @@ void menuDesplegable() {
             break;
         case 3: // jugadores
             mostrarArbolJugadores();
-        break;
+            break;
         case 4: // mejores puntajes
             mostrarMejoresPuntajes();
 
@@ -773,7 +865,7 @@ void menuDesplegable() {
         default:
             cout << "Ingresaste un caracter no válido :C" << endl;
             system("cls");
-            menuDesplegable();
+            //menuDesplegable();
             //
             // getch();
     }
@@ -796,7 +888,7 @@ void coordenar(int xpos, int ypos){
 
 
 // EL FONDO DE LA VERGUENZA
-void generarGraphPrueba(){
+/*void generarGraphPrueba(){
 
     ofstream prueba;
     prueba.open("C:\\Users\\yasmi\\OneDrive\\Escritorio\\Prueba.dot", ios::out);
@@ -828,16 +920,13 @@ void generarGraphPrueba(){
     cout << "\t\t\t---------------------" << endl; // 15
     cout << "\t\t\t   JUGADOR 2\n" << endl;
     cout << "\t\t\t---------------------" << endl;
-
     int choice;
     cout<<"Jugador2: \nQue deseas usar?\n\n1.Jugador Existente\n2.Nuevo Jugador\n3.Regresar"<<endl;
     cin>>choice;
-
     if(choice ==1){
         string nombre1;
         cout<<"Por favor ingresa el nombre de tu jugador"<<endl;
         cin>>nombre1;
-
         ArbolNombres.yaesta = false;
         ArbolNombres.iniciarbuscar(nombre1);
         if(ArbolNombres.yaesta){
@@ -851,20 +940,17 @@ void generarGraphPrueba(){
                 cout<<"El nombre que elegiste es invalido :C\n\n"<<endl;
                 getch();
                 faseParticipante2();
-
             }
         } else {
             cout<<"No se encuentra el nombre del jugador\n\n"<<endl;
             faseParticipante2();
             getch();
         }
-
     }
     else if(choice == 2){
         string nombre1;
         cout<<"Por favor ingresa el nombre de tu jugador"<<endl;
         cin>>nombre1;
-
         ArbolNombres.iniciarInsertar(nombre1);
         if(ArbolNombres.insertcionexitosa){
             cout<<"Nombre del jugador 2 guardado :D\n\n"<<endl;
@@ -875,7 +961,6 @@ void generarGraphPrueba(){
             string nombree1;
             cout<<"Por favor ingresa el nombre de tu jugador"<<endl;
             cin>>nombree1;
-
             ArbolNombres.iniciarInsertar(nombree1);
             if(ArbolNombres.insertcionexitosa){
                 cout<<"Nombre del jugador 2 guardado :D\n\n"<<endl;
@@ -883,7 +968,6 @@ void generarGraphPrueba(){
                 getch();
             }
         }
-
     }
     else if(choice == 3){
         system("cls");

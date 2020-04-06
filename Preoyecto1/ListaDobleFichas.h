@@ -250,7 +250,7 @@ ObjFicha ListaDobleFichas::eliminarFichaRetorno(char letra) {
         }
     }
 
-    cout<<"No se entonctró el caracter"<<endl;
+    cout<<"No se entcontro el caracter"<<endl;
     return ObjFicha(0,0);
 
 }
