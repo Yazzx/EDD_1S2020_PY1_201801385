@@ -102,6 +102,8 @@ void mostrarMejoresPuntajes(){
         if(choice == 1){
             // mejores jugadores
             ListaMejoresJugadores.iniciarGenerarGraphviz();
+            ListaMejoresJugadores.mostrarLista();
+            getch();
             system("cls");
             menuDesplegable();
 
@@ -118,6 +120,7 @@ void mostrarMejoresPuntajes(){
                 cout<<"-----------------> " + jugadorPuntaje.nombre <<endl;
 
                 jugadorPuntaje.generarGraphMejoresPuntajes();
+                jugadorPuntaje.mostrarPuntajes();
                 getch();
                 system("cls");
                 menuDesplegable();
@@ -236,15 +239,19 @@ void iniciarJuego(){
 
     //TODO aca muestro los punteos
 
-    jugador1.insertarPuntaje(jugador1.getPuntajeParcial());
-    jugador2.insertarPuntaje(jugador2.getPuntajeParcial());
-
     cout << "\t------------------------------------------" << endl;
     cout << "\t\t\t PUNTAJES FINALES\n" << endl;
     cout << "\t------------------------------------------" << endl;
 
     cout << "\t--------------------------> Jugador 1: "<<jugador1.getPuntajeParcial() << endl;
     cout << "\t--------------------------> Jugador 2: "<<jugador2.getPuntajeParcial() << endl;
+
+    int jug1 = jugador1.getPuntajeParcial();
+    int jug2 = jugador2.getPuntajeParcial();
+
+    jugador1.insertarPuntaje(jug1);
+    jugador2.insertarPuntaje(jug2);
+
 
     jugador1.setPuntajeParcial(0);
     jugador2.setPuntajeParcial(0);
@@ -465,8 +472,7 @@ void ingresarPalabra(ObjJugador& jugador, int &puntaje, Cola &ColadeFichas){
         cout<<"----------- PALABRA ENCONTRADA -----------"<<endl;
         Matrizz = MatrizAuxiliar;
 
-        int suma = puntaje_final + jugador.getPuntajeParcial();
-        jugador.setPuntajeParcial(suma);
+        jugador.puntaje_parcial += puntaje_final;
 
         cout<<"----------- TU PUNTAJE ES: "<< puntaje_final<<endl;
         puntaje_final = 0;
@@ -486,8 +492,10 @@ void ingresarPalabra(ObjJugador& jugador, int &puntaje, Cola &ColadeFichas){
         MatrizAuxiliar = Matrizz;
         jugador.copiarOriginal(ListaFichasAux);
         puntaje_final = 0;
-
-
+        for (int i = contafichas; i <= 7; ++i) {
+            ObjFicha oficha = ColadeFichas.pop();
+            jugador.insertarFicha(oficha);
+        }
     }
 
 

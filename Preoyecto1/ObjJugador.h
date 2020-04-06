@@ -32,6 +32,8 @@ public:
     void insertarFicha(ObjFicha ficha);
     void mostrarFichas();
 
+    void mostrarPuntajes();
+
     void insertarPuntaje(int punteo);
     int getPuntajeAlto();
 
@@ -117,6 +119,10 @@ int ObjJugador::getPuntajeParcial() const {
 
 void ObjJugador::setPuntajeParcial(int puntajeParcial) {
     puntaje_parcial = puntajeParcial;
+}
+
+void ObjJugador::mostrarPuntajes() {
+        this->Lista7Fichas.mostrarLista();
 }
 
 
