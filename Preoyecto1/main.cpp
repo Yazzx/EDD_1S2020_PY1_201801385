@@ -204,6 +204,7 @@ void iniciarJuego(){
 
             bool terminar0 = terminar();
             if(terminar0){
+                puntaje1 = jugador1.getPuntajeParcial();
                 jugador1.insertarPuntaje(puntaje1);
                 break;
             } else {
@@ -222,6 +223,7 @@ void iniciarJuego(){
 
             bool terminar1 = terminar();
             if(terminar1){
+                puntaje2 = jugador2.getPuntajeParcial();
                 jugador2.insertarPuntaje(puntaje2);
                 break;
             } else {
@@ -250,6 +252,7 @@ void iniciarJuego(){
     puntaje1 = 0;
     puntaje2 = 0;
 
+    getch();
     //TODO
     //aca va todo lo demas
     system("cls");
@@ -484,13 +487,18 @@ void ingresarPalabra(ObjJugador& jugador, int &puntaje, Cola &ColadeFichas){
         jugador.copiarOriginal(ListaFichasAux);
         puntaje_final = 0;
 
+
     }
+
 
 
     return;
 }
 
 void queDeseaHacer(ObjJugador& jugador, int &puntaje, Cola &ColadeFichas){
+
+    Matrizz.iniciarGenerarGraphviz();
+
     int choice;
     cout<<"Que desea hacer ahora?\n1.Insertar Palabra\t\t2.Canjear Fichas"<<endl;
     cin>>choice;

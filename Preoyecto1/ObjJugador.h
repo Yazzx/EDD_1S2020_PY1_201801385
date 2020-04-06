@@ -38,7 +38,9 @@ public:
     explicit ObjJugador(string nombree){
         this->nombre = nombree;
     }
-    ObjJugador()= default;
+    ObjJugador(){
+        puntaje_parcial = 0;
+    }
 
     const string &getNombre() const {
         return nombre;
